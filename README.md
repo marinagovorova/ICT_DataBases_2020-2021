@@ -14,8 +14,8 @@
 
 ## ВВЕДЕНИЕ
 1. [Актуальность проблематики АИС и лежащих в их основе БД](https://drive.google.com/file/d/1Ln0K7m9YBWHZxdHDSuoRuZrH62x4CClc/view?usp=sharing)
-2. [Состав и фукции СУБД. Трехуровневая архитектура БД и СУБД](https://drive.google.com/file/d/1H7Fo0BUV8qcpv9V8Dd4t-Qa2NGTTtixd/view?usp=sharing)
-3. [Состав и фукции СУБД. Трехуровневая архитектура БД и СУБД](https://drive.google.com/file/d/1B2W1X0xsjV1o5Op9cIp4ze02Q27VOKsh/view?usp=sharing)
+2. [Состав и фукции СУБД. Трехуровневая архитектура БД и СУБД (часть 1)](https://drive.google.com/file/d/1H7Fo0BUV8qcpv9V8Dd4t-Qa2NGTTtixd/view?usp=sharing)
+3. [Состав и фукции СУБД. Трехуровневая архитектура БД и СУБД (часть 2)](https://drive.google.com/file/d/1B2W1X0xsjV1o5Op9cIp4ze02Q27VOKsh/view?usp=sharing)
 
 ## Тема 1 СТРУКТУРНЫЙ ПОДХОД К ПРОЕКТИРОВАНИЮ АИС. АНАЛИЗ ПОВЕДЕНИЯ СИСТЕМЫ С ИСПОЛЬЗОВАНИЕМ КОНТЕКСТНЫХ ДИАГРАММ (DFD)
 
