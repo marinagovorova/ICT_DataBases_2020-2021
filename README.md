@@ -6,11 +6,11 @@
 
 [Силабус](https://drive.google.com/file/d/178vnIxmMSaq0RuCrippaZp6umF0dkupx/view?usp=sharing)
 
-[Лекционные материалы]()
+[Лекционные материалы](https://drive.google.com/drive/folders/19zyCUJFdKer2Mcc1y2YAlZiLNPgheyBR?usp=sharing)
 
-[Лабораторные работы]() - задания, оцениваемые преподавателем.
+[Лабораторные работы](https://drive.google.com/drive/folders/1fqUNv073SsWJf16RAA_7RujEtSnmix_p?usp=sharing) - задания, оцениваемые преподавателем.
 
-[Практические задания]() - задания, которые желательно выполнить перед выполнением лабораторной работы для того, чтобы освоить тему.
+[Практические задания](https://drive.google.com/drive/folders/1-wi0hfgI8VVnLYAxiVe2COEi5q1Zj4Oh?usp=sharing) - задания, которые желательно выполнить перед выполнением лабораторной работы для того, чтобы освоить тему.
 
 ## ВВЕДЕНИЕ
 Актуальность проблематики АИС и лежащих в их основе БД
