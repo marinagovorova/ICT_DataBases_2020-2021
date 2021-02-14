@@ -30,7 +30,7 @@
 Подробно задание описано в [тексте работы](https://drive.google.com/drive/folders/1G_hEFPTLBbAmHFnxL3B1zzR7OoR7Bws2?usp=sharing).
 
 Лабораторная работа №1 выполняется в Erwin Process Modeler. Возможны два варианта установки: новая версия с оффициального сайта и получение студенческой лицензии, либо использование триальной версии. 
-Старая версия доступна с [гугл диска](https://drive.google.com/file/d/1LbNQramfeFTjzkj1WVw1M1zqMknb4uE-/view?usp=sharing).
+Старая версия доступна с [гугл-диска](https://drive.google.com/file/d/1LbNQramfeFTjzkj1WVw1M1zqMknb4uE-/view?usp=sharing).
 
 Пример и объяснение того, как сделать функциональную модель, можно посмотреть [здесь](https://www.youtube.com/watch?v=flGjJMsjnG0).
 
