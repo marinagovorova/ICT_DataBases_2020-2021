@@ -2,9 +2,13 @@
 Репозиторий для реализации дисциплины "Проектирование и реализация баз данных"
 ========================
 [Учебный журнал](https://docs.google.com/spreadsheets/d/1ntc2p5-L65md9HbSdO2Gvy5RDVh_UDFNyHXeBA1PE2o/edit?usp=sharing) по дисциплине. Здесь доступна информация о сроках сдачи работ, о текущей успеваемости студентов и о материалах курса.
+
 [Силабус](https://drive.google.com/file/d/178vnIxmMSaq0RuCrippaZp6umF0dkupx/view?usp=sharing)
+
 [Лекционные материалы](https://drive.google.com/drive/folders/19zyCUJFdKer2Mcc1y2YAlZiLNPgheyBR?usp=sharing)
+
 [Лабораторные работы](https://drive.google.com/drive/folders/1fqUNv073SsWJf16RAA_7RujEtSnmix_p?usp=sharing) - задания, оцениваемые преподавателем.
+
 [Практические задания](https://drive.google.com/drive/folders/1-wi0hfgI8VVnLYAxiVe2COEi5q1Zj4Oh?usp=sharing) - задания, которые желательно выполнить перед выполнением лабораторной работы для того, чтобы освоить тему.
 ## ВВЕДЕНИЕ
 1. [Актуальность проблематики АИС и лежащих в их основе БД](https://drive.google.com/file/d/1Ln0K7m9YBWHZxdHDSuoRuZrH62x4CClc/view?usp=sharing)
