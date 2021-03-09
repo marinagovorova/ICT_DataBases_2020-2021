@@ -38,7 +38,17 @@
 Практическое задание 1 [ИЛМ БД CarWash](https://drive.google.com/file/d/1S7iUjVPpWxBbJUFHNMSeUW-NjAJ56Wic/view?usp=sharing) 
 ([ERwin Data Modeler](https://drive.google.com/file/d/1h1WFVtcW9B6IOMilqEg3XtZt5L0b0BIq/view?usp=sharing))
 ### Лабораторная работа 2 АНАЛИЗ ДАННЫХ. ПОСТРОЕНИЕ ИНФОЛОГИЧЕСКОЙ МОДЕЛИ ДАННЫХ
+Цель работы является овладение практическими навыками проведения анализа данных системы и построения инфологической модели данных БД методом «сущность-связь».
 
+Подробно задание описано в [тексте работы](https://drive.google.com/file/d/1NohgZaz6tnrlQxxB3QhCFv4MRknRo8qm/view?usp=sharing).
+
+Модель БД в нотации IDEF1) выполняется в Erwin Data Modeler (или аналоге). Возможны два варианта установки: новая версия с оффициального сайта и получение студенческой лицензии, либо использование триальной версии.
+
+Старая версия доступна с [гугл-диска](https://drive.google.com/file/d/1h1WFVtcW9B6IOMilqEg3XtZt5L0b0BIq/view?usp=sharing).
+
+Пример и объяснение того, как сделать функциональную модель, можно посмотреть [здесь](https://www.youtube.com/watch?v=L_uQeX3zT3I)
+
+Дополнительный лабоаторный практикум по Erwin Data Modeler [здесь](https://drive.google.com/file/d/16cY0kNlPslLHEQ7W_CZcfeDqAUJ4i0v5/view?usp=sharing)
 ## Сдача работ
 Работы защищаются на занятиях или консультациях. 
 Все отчеты сохраняются в **pdf** (документы и презентации).
