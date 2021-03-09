@@ -35,7 +35,7 @@
 ###  Лекция  2.1 КОНЦЕПЦИИ ПРОЕКТИРОВАНИЯ БД
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1KjdI7CEHeXZCm2sLWUFh5m7nnFhFiSQr/view?usp=sharing)
 ### Лекция 2.2 ИНФОЛОГИЧЕСКОЕ ПРОЕКТИРОВАНИЕ. МЕТОД"СУЩНОСТЬ-СВЯЗЬ"
-Материалы лекции доступны [здесь](https://drive.google.com/file/d/137azQRy2eRvG_EZRH39NZ7x7rpCNRYB2/view?usp=sharing)
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1Jo74QJoqMQNIYvQn2iO4vkd4Vf6Bwjfa/view?usp=sharing)
 
 Практическое задание 1 [ИЛМ БД CarWash](https://drive.google.com/file/d/1S7iUjVPpWxBbJUFHNMSeUW-NjAJ56Wic/view?usp=sharing) 
 ([ERwin Data Modeler](https://drive.google.com/file/d/1h1WFVtcW9B6IOMilqEg3XtZt5L0b0BIq/view?usp=sharing))
