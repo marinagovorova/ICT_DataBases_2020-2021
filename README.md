@@ -32,7 +32,9 @@
 
 Лабораторная работа №1 может выполняться в группе до трех человек. Для сдачи работы необходимо сделать презентацию и защитить ее на занятии или консультации. 
 
-Мастер-классы Юрия Купоросова (Университет ИТМО) ["Искусство выступать"](https://drive.google.com/drive/folders/1eoQ1h99qCPsGwN_L4V1nri6eyyeGqU4v?usp=sharing)
+Мастер-классы Юрия Купоросова (Университет ИТМО) "Искусство выступать"
+Чаcть 1. [Как не надо делать презентацию](https://drive.google.com/file/d/1wmtW6op0Qv6JtPRC1k8Y79lJoeG5nOkT/view?usp=sharing)
+Часть 2. [Особенности выступления на защите проекта](https://drive.google.com/file/d/1HMj4N-akL_bqq7NraQ4vYitkdWsOHVjH/view?usp=sharing)
 ##  Тема 2  КОНЦЕПЦИИ ПРОЕКТИРОВАНИЯ БД. ИНФОЛОГИЧЕСКОЕ ПРОЕКТИРОВАНИЕ. МЕТОД "СУЩНОСТЬ-СВЯЗЬ"
 ###  Лекция  2.1 КОНЦЕПЦИИ ПРОЕКТИРОВАНИЯ БД
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1KjdI7CEHeXZCm2sLWUFh5m7nnFhFiSQr/view?usp=sharing)
