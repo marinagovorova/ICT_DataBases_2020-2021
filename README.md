@@ -59,11 +59,11 @@
 Дополнительный лабоhаторный практикум по Erwin Data Modeler [здесь](https://drive.google.com/file/d/16cY0kNlPslLHEQ7W_CZcfeDqAUJ4i0v5/view?usp=sharing)
 ##  Тема 3  РЕЛЯЦИОННАЯ МОДЕЛЬ ДАННЫХ
 ###  Лекция  3.1 РЕЛЯЦИОННАЯ МОДЕЛЬ ДАННЫХ
-Материалы лекции доступны [здесь]()
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1044wCkWqqXuTtoDPRR_iD8jEuihgFmxk/view?usp=sharing)
 ### Лекция 3.2 ИНФОЛОГИЧЕСКОЕ ПРОЕКТИРОВАНИЕ. МЕТОД"СУЩНОСТЬ-СВЯЗЬ"
-Материалы лекции доступны [здесь]()
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1uUQ-oQmE6o4SHmd4I5zR2PbnUeuKbYgk/view?usp=sharing)
 ### 12 правил Кодда
-
+Материалы доступны [здесь](https://drive.google.com/file/d/14ZnQe2mOlUAytfP3f9vsurFkq0sFmcbN/view?usp=sharing)
 ## Требования к отчетам по лабораторным работам
 **Структура отчета** соответсвует требованиям, заданным в лабораторной работе.
 
