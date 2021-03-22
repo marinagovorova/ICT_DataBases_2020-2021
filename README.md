@@ -56,7 +56,9 @@
 
 Пример и объяснение того, как сделать функциональную модель, можно посмотреть [здесь](https://www.youtube.com/watch?v=L_uQeX3zT3I)
 
-Дополнительный лабоhаторный практикум по Erwin Data Modeler [здесь](https://drive.google.com/file/d/16cY0kNlPslLHEQ7W_CZcfeDqAUJ4i0v5/view?usp=sharing)
+Дополнительный лабораторный практикум по Erwin Data Modeler [здесь](https://drive.google.com/file/d/16cY0kNlPslLHEQ7W_CZcfeDqAUJ4i0v5/view?usp=sharing)
+
+Отчетные материалы (для пул-реквеста) включают файл отчета по лабораторно работе (PDF) и файл модели в Erwin Data Modeler (PDF).
 ##  Тема 3  РЕЛЯЦИОННАЯ МОДЕЛЬ ДАННЫХ
 ###  Лекция  3.1 РЕЛЯЦИОННАЯ МОДЕЛЬ ДАННЫХ
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1044wCkWqqXuTtoDPRR_iD8jEuihgFmxk/view?usp=sharing)
