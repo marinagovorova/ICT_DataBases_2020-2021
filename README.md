@@ -68,11 +68,11 @@
 Материалы доступны [здесь](https://drive.google.com/file/d/14ZnQe2mOlUAytfP3f9vsurFkq0sFmcbN/view?usp=sharing)
 ##  Тема 5  РЕЛЯЦИОННАЯ АЛГЕБРА
 ###  Лекция  5.1 РЕЛЯЦИОННАЯ АЛГЕБРА
-Материалы лекции доступны [здесь]()
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1jlz1ClmxahOsqwzrSPgByMGeOUZvy5WQ/view?usp=sharing)
 ###  Лекция  5.2 Дополнительно РЕЛЯЦИОННАЯ АЛГЕБРА (примеры)
-Материалы доступны [здесь]()
+Материалы доступны [здесь](https://drive.google.com/file/d/188z-gIBUJ3MtFNWW5FR8yr_dmlvG0Qtg/view?usp=sharing)
 ###  Реляционная алгебра (дополнительные материалы)
-Материалы доступны [здесь]()
+Материалы доступны [здесь](https://drive.google.com/file/d/17hpvHa08JGX3J-bqZPLEA4FCwjKxVYwl/view?usp=sharing)
 ## Требования к отчетным материалам по лабораторным работам
 **Структура отчета** соответсвует требованиям, заданным в лабораторной работе.
 
