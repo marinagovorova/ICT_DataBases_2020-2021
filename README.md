@@ -95,7 +95,7 @@
 
 3.1 [УСТАНОВКА СУБД POSTGRESQL. СОЗДАНИЕ БАЗЫ ДАННЫХ В PGADMIN](https://drive.google.com/file/d/1hJNZ06XG7gIseZuMUUNc-q9nC7O8IlYO/view?usp=sharing)
 
-3.2 [СОЗДАНИЕ ТАБЛИЦ БАЗЫ ДАННЫХ POSTGRESQL. ЗАПОЛНЕНИЕ ТАБЛИЦ РАБОЧИМИ ДАННЫМИ](https://drive.google.com/file/d/1B0_8Xq7u5ufCoBFCP1NYN1dRqMO0k7lt/view?usp=sharing)
+3.2 [СОЗДАНИЕ ТАБЛИЦ БАЗЫ ДАННЫХ POSTGRESQL. ЗАПОЛНЕНИЕ ТАБЛИЦ РАБОЧИМИ ДАННЫМИ](https://drive.google.com/file/d/1e8eBFhsZVHeKePRSMr5CERegOz7s2Zfg/view?usp=sharing)
 
 Отчет по лабораторной работе создается по части 3.2. Отчетные материалы (для пул-реквеста) включают файл отчета по лабораторной работе (PDF) и dump базы данны для восстановления БД.
 ## Требования к отчетным материалам по лабораторным работам
