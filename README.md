@@ -97,7 +97,7 @@
 
 3.2 [СОЗДАНИЕ ТАБЛИЦ БАЗЫ ДАННЫХ POSTGRESQL. ЗАПОЛНЕНИЕ ТАБЛИЦ РАБОЧИМИ ДАННЫМИ](https://drive.google.com/file/d/1e8eBFhsZVHeKePRSMr5CERegOz7s2Zfg/view?usp=sharing)
 
-Для установки PostgreSQL ее можно скачать для Windows (и других ОС) с [официального сайта PostgreSQL](https://www.postgresql.org/download/)
+Для установки PostgreSQL ее можно скачать для Windows (и других ОС) с [официального сайта PostgreSQL](https://www.postgresql.org/download/).
 
 Отчет по лабораторной работе создается по части 3.2. Отчетные материалы (для пул-реквеста) включают файл отчета по лабораторной работе (PDF) и dump базы данных для восстановления БД.
 ## Требования к отчетным материалам по лабораторным работам
