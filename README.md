@@ -68,13 +68,13 @@
 Материалы доступны [здесь](https://drive.google.com/file/d/14ZnQe2mOlUAytfP3f9vsurFkq0sFmcbN/view?usp=sharing)
 ##  Тема 4  МЕТОД НОРМАЛЬНЫХ ФОРМ
 ###  Лекция  4.1 Целостность базы данных
-Материалы лекции доступны [здесь]()
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1qIqkZyK5iBa90vFZwLShoSejbWYWkoJ7/view?usp=sharing)
 ### Лекция 4.2 МЕТОД НОРМАЛЬНЫХ ФОРМ
-Материалы лекции доступны [здесь]()
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1QRrpc_WaMb3uZTAQAMdCUlZSRE8elr5Q/view?usp=sharing)
 ### Пример нормализации БД "Учебная часть"
-Материалы доступны [здесь]()
+Материалы доступны [здесь](https://drive.google.com/file/d/1ZxO7uKGKUFvTDXsKnhsf4FO-beDjZMBJ/view?usp=sharing)
 ### Дополнительно: статья по нормализации
-Материалы доступны [здесь]()
+Материалы доступны [здесь](https://drive.google.com/file/d/1IrqbJwF5mMMV6FkPVyINKNTDa-rLDhsy/view?usp=sharing)
 ##  Тема 5  РЕЛЯЦИОННАЯ АЛГЕБРА
 ###  Лекция  5.1 РЕЛЯЦИОННАЯ АЛГЕБРА
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1jlz1ClmxahOsqwzrSPgByMGeOUZvy5WQ/view?usp=sharing)
