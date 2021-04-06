@@ -66,6 +66,15 @@
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1uUQ-oQmE6o4SHmd4I5zR2PbnUeuKbYgk/view?usp=sharing)
 ### 12 правил Кодда
 Материалы доступны [здесь](https://drive.google.com/file/d/14ZnQe2mOlUAytfP3f9vsurFkq0sFmcbN/view?usp=sharing)
+##  Тема 4  МЕТОД НОРМАЛЬНЫХ ФОРМ
+###  Лекция  4.1 Целостность базы данных
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1qIqkZyK5iBa90vFZwLShoSejbWYWkoJ7/view?usp=sharing)
+### Лекция 4.2 МЕТОД НОРМАЛЬНЫХ ФОРМ
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1QRrpc_WaMb3uZTAQAMdCUlZSRE8elr5Q/view?usp=sharing)
+### Пример нормализации БД "Учебная часть"
+Материалы доступны [здесь](https://drive.google.com/file/d/1ZxO7uKGKUFvTDXsKnhsf4FO-beDjZMBJ/view?usp=sharing)
+### Дополнительно: статья по нормализации
+Материалы доступны [здесь](https://drive.google.com/file/d/1IrqbJwF5mMMV6FkPVyINKNTDa-rLDhsy/view?usp=sharing)
 ##  Тема 5  РЕЛЯЦИОННАЯ АЛГЕБРА
 ###  Лекция  5.1 РЕЛЯЦИОННАЯ АЛГЕБРА
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1jlz1ClmxahOsqwzrSPgByMGeOUZvy5WQ/view?usp=sharing)
@@ -73,6 +82,24 @@
 Материалы доступны [здесь](https://drive.google.com/file/d/188z-gIBUJ3MtFNWW5FR8yr_dmlvG0Qtg/view?usp=sharing)
 ###  Реляционная алгебра (дополнительные материалы)
 Материалы доступны [здесь](https://drive.google.com/file/d/17hpvHa08JGX3J-bqZPLEA4FCwjKxVYwl/view?usp=sharing)
+##  Тема 6 ВВЕДЕНИЕ В SQL
+###  Лекция  6 ВВЕДЕНИЕ В SQL
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1XvxfOzP_pvkhaA4LigiVnANaOEg4WLSY/view?usp=sharing)
+##  Тема 7 КОМАНДЫ DDL И DML SQL
+###  Лекция 7 КОМАНДЫ DDL И DML SQL
+Материалы лекции доступны [здесь](https://drive.google.com/file/d/1NrUjfJEuEaL8GsAXQTxu8Lp1uTHkWFSL/view?usp=sharing)
+### Лабораторная работа 3 СОЗДАНИЕ БАЗЫ ДАННЫХ POSTGRESQL СРЕДСТВАМИ PGADMIN
+Цель работы является овладение практическими навыками создания базы данных в PostgreSQL 1Х, заполнения их рабочими данными, резервного копирования и восстановления БД с использованием pgadmin 4.
+
+Лабораторная работа включает две части:
+
+3.1 [УСТАНОВКА СУБД POSTGRESQL. СОЗДАНИЕ БАЗЫ ДАННЫХ В PGADMIN](https://drive.google.com/file/d/1hJNZ06XG7gIseZuMUUNc-q9nC7O8IlYO/view?usp=sharing)
+
+3.2 [СОЗДАНИЕ ТАБЛИЦ БАЗЫ ДАННЫХ POSTGRESQL. ЗАПОЛНЕНИЕ ТАБЛИЦ РАБОЧИМИ ДАННЫМИ](https://drive.google.com/file/d/1e8eBFhsZVHeKePRSMr5CERegOz7s2Zfg/view?usp=sharing)
+
+Для установки PostgreSQL ее можно скачать для Windows (и других ОС) с [официального сайта PostgreSQL](https://www.postgresql.org/download/).
+
+Отчет по лабораторной работе создается по части 3.2. Отчетные материалы (для пул-реквеста) включают файл отчета по лабораторной работе (PDF) и dump базы данных для восстановления БД.
 ## Требования к отчетным материалам по лабораторным работам
 **Структура отчета** соответсвует требованиям, заданным в лабораторной работе.
 
