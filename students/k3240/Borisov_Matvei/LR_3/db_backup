@@ -5,7 +5,7 @@
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-05-04 13:03:46 MSK
+-- Started on 2021-05-04 13:59:00 MSK
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -88,7 +88,8 @@ CREATE TABLE bookshop.circulation (
     price integer NOT NULL,
     date date NOT NULL,
     printed_amount integer NOT NULL,
-    retains_amount integer NOT NULL
+    retains_amount integer NOT NULL,
+    isbn_code integer NOT NULL
 );
 
 
@@ -163,8 +164,7 @@ CREATE TABLE bookshop.book (
     start_of_sales date NOT NULL,
     is_illustrated boolean,
     name character varying NOT NULL,
-    pages integer,
-    circulation_id integer NOT NULL
+    pages integer
 );
 
 
@@ -252,7 +252,7 @@ COPY bookshop.author_book (author_id, isbn_code, "position") FROM stdin;
 -- Data for Name: book; Type: TABLE DATA; Schema: bookshop; Owner: postgres
 --
 
-COPY bookshop.book (isbn_code, start_of_sales, is_illustrated, name, pages, circulation_id) FROM stdin;
+COPY bookshop.book (isbn_code, start_of_sales, is_illustrated, name, pages) FROM stdin;
 \.
 
 
@@ -282,7 +282,7 @@ COPY bookshop.category_item (isbn_code, "category_id ") FROM stdin;
 -- Data for Name: circulation; Type: TABLE DATA; Schema: bookshop; Owner: postgres
 --
 
-COPY bookshop.circulation (id, price, date, printed_amount, retains_amount) FROM stdin;
+COPY bookshop.circulation (id, price, date, printed_amount, retains_amount, isbn_code) FROM stdin;
 \.
 
 
@@ -479,7 +479,7 @@ ALTER TABLE bookshop."order"
 
 
 --
--- TOC entry 3178 (class 2606 OID 16600)
+-- TOC entry 3179 (class 2606 OID 16600)
 -- Name: author_book author_id; Type: FK CONSTRAINT; Schema: bookshop; Owner: postgres
 --
 
@@ -494,15 +494,6 @@ ALTER TABLE ONLY bookshop.author_book
 
 ALTER TABLE ONLY bookshop.category_item
     ADD CONSTRAINT category_id FOREIGN KEY ("category_id ") REFERENCES bookshop.category(id);
-
-
---
--- TOC entry 3180 (class 2606 OID 16610)
--- Name: book circulation_id; Type: FK CONSTRAINT; Schema: bookshop; Owner: postgres
---
-
-ALTER TABLE ONLY bookshop.book
-    ADD CONSTRAINT circulation_id FOREIGN KEY (circulation_id) REFERENCES bookshop.circulation(id);
 
 
 --
@@ -533,12 +524,21 @@ ALTER TABLE ONLY bookshop.category_item
 
 
 --
--- TOC entry 3179 (class 2606 OID 16630)
+-- TOC entry 3180 (class 2606 OID 16630)
 -- Name: author_book isbn_code; Type: FK CONSTRAINT; Schema: bookshop; Owner: postgres
 --
 
 ALTER TABLE ONLY bookshop.author_book
     ADD CONSTRAINT isbn_code FOREIGN KEY (isbn_code) REFERENCES bookshop.book(isbn_code);
+
+
+--
+-- TOC entry 3178 (class 2606 OID 16646)
+-- Name: circulation isbn_code; Type: FK CONSTRAINT; Schema: bookshop; Owner: postgres
+--
+
+ALTER TABLE ONLY bookshop.circulation
+    ADD CONSTRAINT isbn_code FOREIGN KEY (isbn_code) REFERENCES bookshop.book(isbn_code) NOT VALID;
 
 
 --
@@ -550,7 +550,7 @@ ALTER TABLE ONLY bookshop.order_item
     ADD CONSTRAINT order_id FOREIGN KEY (order_id) REFERENCES bookshop."order"(id);
 
 
--- Completed on 2021-05-04 13:03:46 MSK
+-- Completed on 2021-05-04 13:59:00 MSK
 
 --
 -- PostgreSQL database dump complete
