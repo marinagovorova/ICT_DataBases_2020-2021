@@ -1,0 +1,447 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-05-02 21:07:15
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3039 (class 1262 OID 16396)
+-- Name: todo_app; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE todo_app WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE = 'Russian_Russia.1251';
+
+
+ALTER DATABASE todo_app OWNER TO postgres;
+
+\connect todo_app
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 3040 (class 0 OID 0)
+-- Dependencies: 3039
+-- Name: DATABASE todo_app; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE todo_app IS '2021.05.02 - db design - task 3';
+
+
+--
+-- TOC entry 6 (class 2615 OID 16397)
+-- Name: todo_v1; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA todo_v1;
+
+
+ALTER SCHEMA todo_v1 OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 201 (class 1259 OID 16401)
+-- Name: department; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1.department (
+    dep_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    phone_number character varying(20)
+);
+
+
+ALTER TABLE todo_v1.department OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16414)
+-- Name: emploee; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1.emploee (
+    emp_id integer NOT NULL,
+    pos_id integer NOT NULL,
+    dep_id integer NOT NULL,
+    first_name character varying(25) NOT NULL,
+    last_name character varying(25) NOT NULL,
+    middle_name character varying(25) NOT NULL
+);
+
+
+ALTER TABLE todo_v1.emploee OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16434)
+-- Name: organization; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1.organization (
+    org_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    address character varying(255) NOT NULL
+);
+
+
+ALTER TABLE todo_v1.organization OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16408)
+-- Name: position; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1."position" (
+    pos_id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    salary integer,
+    CONSTRAINT salary CHECK ((salary > 0))
+);
+
+
+ALTER TABLE todo_v1."position" OWNER TO postgres;
+
+--
+-- TOC entry 3041 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: CONSTRAINT salary ON "position"; Type: COMMENT; Schema: todo_v1; Owner: postgres
+--
+
+COMMENT ON CONSTRAINT salary ON todo_v1."position" IS 'Больше нуля';
+
+
+--
+-- TOC entry 205 (class 1259 OID 16442)
+-- Name: project; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1.project (
+    prj_id integer NOT NULL,
+    org_id integer NOT NULL,
+    emp_id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    start_date date NOT NULL,
+    due_date date NOT NULL,
+    status character varying(20) NOT NULL,
+    CONSTRAINT due_date CHECK ((due_date > start_date))
+);
+
+
+ALTER TABLE todo_v1.project OWNER TO postgres;
+
+--
+-- TOC entry 3042 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: CONSTRAINT due_date ON project; Type: COMMENT; Schema: todo_v1; Owner: postgres
+--
+
+COMMENT ON CONSTRAINT due_date ON todo_v1.project IS 'Не раньше start_date';
+
+
+--
+-- TOC entry 206 (class 1259 OID 16458)
+-- Name: task; Type: TABLE; Schema: todo_v1; Owner: postgres
+--
+
+CREATE TABLE todo_v1.task (
+    task_id integer NOT NULL,
+    prj_id integer NOT NULL,
+    start_date date,
+    due_date date,
+    due_check_date date,
+    status character varying(20) NOT NULL,
+    failed_to_complete_reason character varying(255),
+    emp_id integer NOT NULL
+);
+
+
+ALTER TABLE todo_v1.task OWNER TO postgres;
+
+--
+-- TOC entry 3028 (class 0 OID 16401)
+-- Dependencies: 201
+-- Data for Name: department; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1.department (dep_id, name, phone_number) VALUES (1, 'Department of Science', '(541) 754-3010');
+INSERT INTO todo_v1.department (dep_id, name, phone_number) VALUES (2, 'Department of Future', '+(123) - 456-78-90');
+
+
+--
+-- TOC entry 3030 (class 0 OID 16414)
+-- Dependencies: 203
+-- Data for Name: emploee; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (1, 1, 1, 'Vlad', 'Dracula', 'Nightmare');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (2, 2, 1, 'Karen', 'Smith', 'Middle');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (3, 2, 2, 'Karen', 'The', 'Second');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (4, 3, 1, 'Ivan', 'Ivanov', 'Ivanovich');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (5, 3, 1, 'Peter', 'Petrov', 'Petrovich');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (6, 3, 2, 'Oleg', 'Olegov', 'Olegovich');
+INSERT INTO todo_v1.emploee (emp_id, pos_id, dep_id, first_name, last_name, middle_name) VALUES (7, 3, 2, 'Andrew', 'Androv', 'Andrevich');
+
+
+--
+-- TOC entry 3031 (class 0 OID 16434)
+-- Dependencies: 204
+-- Data for Name: organization; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1.organization (org_id, name, address) VALUES (1, 'OOO "Gosudarstvo"', 'Ulitsa Pushkina, dom Kolotushkina');
+INSERT INTO todo_v1.organization (org_id, name, address) VALUES (2, '"SpaceX"', 'Solar System, Mars');
+
+
+--
+-- TOC entry 3029 (class 0 OID 16408)
+-- Dependencies: 202
+-- Data for Name: position; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1."position" (pos_id, name, salary) VALUES (2, 'Manager', 100000);
+INSERT INTO todo_v1."position" (pos_id, name, salary) VALUES (1, 'CEO', 500000);
+INSERT INTO todo_v1."position" (pos_id, name, salary) VALUES (3, 'Worker', 50000);
+
+
+--
+-- TOC entry 3032 (class 0 OID 16442)
+-- Dependencies: 205
+-- Data for Name: project; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1.project (prj_id, org_id, emp_id, name, start_date, due_date, status) VALUES (1, 1, 2, 'Science Adv', '2021-05-02', '2021-05-10', 'In work');
+INSERT INTO todo_v1.project (prj_id, org_id, emp_id, name, start_date, due_date, status) VALUES (2, 2, 3, 'Time machine', '2021-05-03', '2021-05-20', 'In work');
+
+
+--
+-- TOC entry 3033 (class 0 OID 16458)
+-- Dependencies: 206
+-- Data for Name: task; Type: TABLE DATA; Schema: todo_v1; Owner: postgres
+--
+
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (1, 1, '2021-05-02', '2021-05-10', '2021-05-05', 'Completed', NULL, 4);
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (2, 1, '2021-05-02', '2021-05-10', '2021-05-05', 'Canceled', NULL, 5);
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (3, 2, '2021-05-02', '2021-05-20', '2021-05-10', 'Paused', NULL, 6);
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (4, 2, '2021-05-02', '2021-05-20', '2021-05-10', 'In work', NULL, 7);
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (5, 1, '2021-05-02', '2021-05-20', '2021-05-10', 'Canceled', 'Karen doesnt want to work', 2);
+INSERT INTO todo_v1.task (task_id, prj_id, start_date, due_date, due_check_date, status, failed_to_complete_reason, emp_id) VALUES (6, 2, '2021-05-02', '2021-05-20', '2021-05-10', 'Processing', NULL, 1);
+
+
+--
+-- TOC entry 2881 (class 2606 OID 16406)
+-- Name: department department_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.department
+    ADD CONSTRAINT department_pkey PRIMARY KEY (dep_id);
+
+
+--
+-- TOC entry 2877 (class 2606 OID 16474)
+-- Name: task due_check_date; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.task
+    ADD CONSTRAINT due_check_date CHECK (((due_check_date > start_date) AND (due_check_date < due_date))) NOT VALID;
+
+
+--
+-- TOC entry 2878 (class 2606 OID 16473)
+-- Name: task due_date; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.task
+    ADD CONSTRAINT due_date CHECK (((due_date > start_date) AND (due_date > due_check_date))) NOT VALID;
+
+
+--
+-- TOC entry 3043 (class 0 OID 0)
+-- Dependencies: 2878
+-- Name: CONSTRAINT due_date ON task; Type: COMMENT; Schema: todo_v1; Owner: postgres
+--
+
+COMMENT ON CONSTRAINT due_date ON todo_v1.task IS 'Не раньше start_date, due_check_date';
+
+
+--
+-- TOC entry 2885 (class 2606 OID 16419)
+-- Name: emploee emploee_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.emploee
+    ADD CONSTRAINT emploee_pkey PRIMARY KEY (emp_id);
+
+
+--
+-- TOC entry 2872 (class 2606 OID 16510)
+-- Name: emploee first_name; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.emploee
+    ADD CONSTRAINT first_name CHECK (((first_name)::text ~ '^[A-Z|a-z|А-Я|а-я|ё|Ё]+$'::text)) NOT VALID;
+
+
+--
+-- TOC entry 2873 (class 2606 OID 16512)
+-- Name: emploee last_name; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.emploee
+    ADD CONSTRAINT last_name CHECK (((last_name)::text ~ '^[A-Z|a-z|А-Я|а-я|ё|Ё]+$'::text)) NOT VALID;
+
+
+--
+-- TOC entry 2874 (class 2606 OID 16511)
+-- Name: emploee middle_name; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.emploee
+    ADD CONSTRAINT middle_name CHECK (((middle_name)::text ~ '^[A-Z|a-z|А-Я|а-я|ё|Ё]+$'::text)) NOT VALID;
+
+
+--
+-- TOC entry 2887 (class 2606 OID 16441)
+-- Name: organization organization_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.organization
+    ADD CONSTRAINT organization_pkey PRIMARY KEY (org_id);
+
+
+--
+-- TOC entry 2870 (class 2606 OID 16490)
+-- Name: department phone_number; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.department
+    ADD CONSTRAINT phone_number CHECK (((phone_number)::text ~ '^([0-9\(\)\/\+ \-]*)$'::text)) NOT VALID;
+
+
+--
+-- TOC entry 2883 (class 2606 OID 16413)
+-- Name: position position_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1."position"
+    ADD CONSTRAINT position_pkey PRIMARY KEY (pos_id);
+
+
+--
+-- TOC entry 2889 (class 2606 OID 16447)
+-- Name: project project_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.project
+    ADD CONSTRAINT project_pkey PRIMARY KEY (prj_id);
+
+
+--
+-- TOC entry 2879 (class 2606 OID 16513)
+-- Name: task status; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.task
+    ADD CONSTRAINT status CHECK (((status)::text = ANY (ARRAY['In work'::text, 'Completed'::text, 'Paused'::text, 'Canceled'::text, 'Processing'::text]))) NOT VALID;
+
+
+--
+-- TOC entry 2876 (class 2606 OID 16514)
+-- Name: project status; Type: CHECK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE todo_v1.project
+    ADD CONSTRAINT status CHECK (((status)::text = ANY (ARRAY['In work'::text, 'Completed'::text, 'Paused'::text, 'Canceled'::text, 'Processing'::text]))) NOT VALID;
+
+
+--
+-- TOC entry 2891 (class 2606 OID 16462)
+-- Name: task task_pkey; Type: CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.task
+    ADD CONSTRAINT task_pkey PRIMARY KEY (task_id, emp_id);
+
+
+--
+-- TOC entry 2893 (class 2606 OID 16425)
+-- Name: emploee dep_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.emploee
+    ADD CONSTRAINT dep_id_fk FOREIGN KEY (dep_id) REFERENCES todo_v1.department(dep_id);
+
+
+--
+-- TOC entry 2895 (class 2606 OID 16453)
+-- Name: project emp_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.project
+    ADD CONSTRAINT emp_id_fk FOREIGN KEY (emp_id) REFERENCES todo_v1.emploee(emp_id);
+
+
+--
+-- TOC entry 2897 (class 2606 OID 16468)
+-- Name: task emp_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.task
+    ADD CONSTRAINT emp_id_fk FOREIGN KEY (emp_id) REFERENCES todo_v1.emploee(emp_id);
+
+
+--
+-- TOC entry 2894 (class 2606 OID 16448)
+-- Name: project org_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.project
+    ADD CONSTRAINT org_id_fk FOREIGN KEY (org_id) REFERENCES todo_v1.organization(org_id);
+
+
+--
+-- TOC entry 2892 (class 2606 OID 16420)
+-- Name: emploee pos_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.emploee
+    ADD CONSTRAINT pos_id_fk FOREIGN KEY (pos_id) REFERENCES todo_v1."position"(pos_id);
+
+
+--
+-- TOC entry 2896 (class 2606 OID 16463)
+-- Name: task prj_id_fk; Type: FK CONSTRAINT; Schema: todo_v1; Owner: postgres
+--
+
+ALTER TABLE ONLY todo_v1.task
+    ADD CONSTRAINT prj_id_fk FOREIGN KEY (prj_id) REFERENCES todo_v1.project(prj_id);
+
+
+-- Completed on 2021-05-02 21:07:15
+
+--
+-- PostgreSQL database dump complete
+--
+
