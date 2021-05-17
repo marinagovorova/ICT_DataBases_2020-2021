@@ -1,0 +1,895 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2 (Ubuntu 13.2-1.pgdg20.04+1)
+-- Dumped by pg_dump version 13.2 (Ubuntu 13.2-1.pgdg20.04+1)
+
+-- Started on 2021-05-03 18:33:17 MSK
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 16703)
+-- Name: courses; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA courses;
+
+
+ALTER SCHEMA courses OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 213 (class 1259 OID 16856)
+-- Name: area; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.area (
+    area_address character varying(50) NOT NULL,
+    area_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE courses.area OWNER TO postgres;
+
+--
+-- TOC entry 214 (class 1259 OID 16868)
+-- Name: auditorium; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.auditorium (
+    auditorium_number integer NOT NULL,
+    auditorium_type character varying(30) NOT NULL,
+    area_address character varying(50) NOT NULL,
+    CONSTRAINT audotorium_auditorium_number_check CHECK (((auditorium_number > 0) AND (auditorium_number < 7999)))
+);
+
+
+ALTER TABLE courses.auditorium OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 16831)
+-- Name: discipline; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.discipline (
+    id_discipline integer NOT NULL,
+    discipline_name character varying(50) NOT NULL,
+    number_of_hours integer NOT NULL
+);
+
+
+ALTER TABLE courses.discipline OWNER TO postgres;
+
+--
+-- TOC entry 210 (class 1259 OID 16829)
+-- Name: discipline_id_discipline_seq; Type: SEQUENCE; Schema: courses; Owner: postgres
+--
+
+CREATE SEQUENCE courses.discipline_id_discipline_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE courses.discipline_id_discipline_seq OWNER TO postgres;
+
+--
+-- TOC entry 3120 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: discipline_id_discipline_seq; Type: SEQUENCE OWNED BY; Schema: courses; Owner: postgres
+--
+
+ALTER SEQUENCE courses.discipline_id_discipline_seq OWNED BY courses.discipline.id_discipline;
+
+
+--
+-- TOC entry 215 (class 1259 OID 16880)
+-- Name: lesson; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.lesson (
+    id_program character varying(20) NOT NULL,
+    id_recruitment integer NOT NULL,
+    group_number character varying(20) NOT NULL,
+    id_teacher integer NOT NULL,
+    id_discipline integer NOT NULL,
+    number_of_lesson integer NOT NULL,
+    date_of_lesson date NOT NULL,
+    lesson_type character varying(20) NOT NULL,
+    auditorium_number integer NOT NULL,
+    CONSTRAINT lesson_number_of_lesson_check CHECK (((number_of_lesson > 0) AND (number_of_lesson < 7)))
+);
+
+
+ALTER TABLE courses.lesson OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16704)
+-- Name: program; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.program (
+    id_program character varying(20) NOT NULL,
+    program_type character varying(20) NOT NULL,
+    program_name character varying(50) NOT NULL,
+    form_of_study character varying(20) NOT NULL
+);
+
+
+ALTER TABLE courses.program OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 16840)
+-- Name: program_composition; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.program_composition (
+    id_discipline integer NOT NULL,
+    id_program character varying(20) NOT NULL,
+    number_of_sem integer NOT NULL,
+    CONSTRAINT program_composition_number_of_sem_check CHECK (((number_of_sem < 9) AND (number_of_sem > 0)))
+);
+
+
+ALTER TABLE courses.program_composition OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16715)
+-- Name: recruitment; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.recruitment (
+    id_program character varying(20) NOT NULL,
+    id_recruitment integer NOT NULL,
+    date_start date NOT NULL,
+    date_finish date NOT NULL,
+    CONSTRAINT recruitment_check CHECK ((date_start < date_finish))
+);
+
+
+ALTER TABLE courses.recruitment OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16713)
+-- Name: recruitment_id_recruitment_seq; Type: SEQUENCE; Schema: courses; Owner: postgres
+--
+
+CREATE SEQUENCE courses.recruitment_id_recruitment_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE courses.recruitment_id_recruitment_seq OWNER TO postgres;
+
+--
+-- TOC entry 3121 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: recruitment_id_recruitment_seq; Type: SEQUENCE OWNED BY; Schema: courses; Owner: postgres
+--
+
+ALTER SEQUENCE courses.recruitment_id_recruitment_seq OWNED BY courses.recruitment.id_recruitment;
+
+
+--
+-- TOC entry 206 (class 1259 OID 16766)
+-- Name: student; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.student (
+    id_student integer NOT NULL,
+    student_name character varying(50) NOT NULL,
+    student_passport character varying(20) NOT NULL,
+    student_email character varying(30),
+    student_phone character varying(20)
+);
+
+
+ALTER TABLE courses.student OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16764)
+-- Name: student_id_student_seq; Type: SEQUENCE; Schema: courses; Owner: postgres
+--
+
+CREATE SEQUENCE courses.student_id_student_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE courses.student_id_student_seq OWNER TO postgres;
+
+--
+-- TOC entry 3122 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: student_id_student_seq; Type: SEQUENCE OWNED BY; Schema: courses; Owner: postgres
+--
+
+ALTER SEQUENCE courses.student_id_student_seq OWNED BY courses.student.id_student;
+
+
+--
+-- TOC entry 207 (class 1259 OID 16795)
+-- Name: student_stay; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.student_stay (
+    id_student integer NOT NULL,
+    id_program character varying(20) NOT NULL,
+    id_recruitment integer NOT NULL,
+    group_number character varying(20) NOT NULL,
+    student_status character varying(20) NOT NULL,
+    id_document character varying(20) NOT NULL
+);
+
+
+ALTER TABLE courses.student_stay OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16749)
+-- Name: study_group; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.study_group (
+    id_program character varying(20) NOT NULL,
+    id_recruitment integer NOT NULL,
+    group_number character varying(20) NOT NULL
+);
+
+
+ALTER TABLE courses.study_group OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16823)
+-- Name: teacher; Type: TABLE; Schema: courses; Owner: postgres
+--
+
+CREATE TABLE courses.teacher (
+    id_teacher integer NOT NULL,
+    teacher_name character varying(50) NOT NULL,
+    teacher_position character varying(40) NOT NULL
+);
+
+
+ALTER TABLE courses.teacher OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16821)
+-- Name: teacher_id_teacher_seq; Type: SEQUENCE; Schema: courses; Owner: postgres
+--
+
+CREATE SEQUENCE courses.teacher_id_teacher_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE courses.teacher_id_teacher_seq OWNER TO postgres;
+
+--
+-- TOC entry 3123 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: teacher_id_teacher_seq; Type: SEQUENCE OWNED BY; Schema: courses; Owner: postgres
+--
+
+ALTER SEQUENCE courses.teacher_id_teacher_seq OWNED BY courses.teacher.id_teacher;
+
+
+--
+-- TOC entry 2914 (class 2604 OID 16834)
+-- Name: discipline id_discipline; Type: DEFAULT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.discipline ALTER COLUMN id_discipline SET DEFAULT nextval('courses.discipline_id_discipline_seq'::regclass);
+
+
+--
+-- TOC entry 2909 (class 2604 OID 16718)
+-- Name: recruitment id_recruitment; Type: DEFAULT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.recruitment ALTER COLUMN id_recruitment SET DEFAULT nextval('courses.recruitment_id_recruitment_seq'::regclass);
+
+
+--
+-- TOC entry 2911 (class 2604 OID 16769)
+-- Name: student id_student; Type: DEFAULT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student ALTER COLUMN id_student SET DEFAULT nextval('courses.student_id_student_seq'::regclass);
+
+
+--
+-- TOC entry 2913 (class 2604 OID 16826)
+-- Name: teacher id_teacher; Type: DEFAULT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.teacher ALTER COLUMN id_teacher SET DEFAULT nextval('courses.teacher_id_teacher_seq'::regclass);
+
+
+--
+-- TOC entry 3112 (class 0 OID 16856)
+-- Dependencies: 213
+-- Data for Name: area; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.area (area_address, area_name) FROM stdin;
+Ул. Чайковского 47	чайка
+Биржевая линия 20	биржа
+Пр. Кронверкский 16	кронва
+онлайн	онлайн
+\.
+
+
+--
+-- TOC entry 3113 (class 0 OID 16868)
+-- Dependencies: 214
+-- Data for Name: auditorium; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.auditorium (auditorium_number, auditorium_type, area_address) FROM stdin;
+114	лекционная	Пр. Кронверкский 16
+302	лекционная	Пр. Кронверкский 16
+210	лабораторная	Пр. Кронверкский 16
+532	семинарная	Пр. Кронверкский 16
+205	лекционная	Биржевая линия 20
+304	лабораторная	Биржевая линия 20
+404	семинарная	Биржевая линия 20
+242	семинарная	Ул. Чайковского 47
+1	онлайн	онлайн
+\.
+
+
+--
+-- TOC entry 3110 (class 0 OID 16831)
+-- Dependencies: 211
+-- Data for Name: discipline; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.discipline (id_discipline, discipline_name, number_of_hours) FROM stdin;
+1	Физическая химия	48
+2	Механика	48
+3	Основы html	64
+4	Генетика	32
+5	Основы механики	32
+6	Физика	48
+\.
+
+
+--
+-- TOC entry 3114 (class 0 OID 16880)
+-- Dependencies: 215
+-- Data for Name: lesson; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.lesson (id_program, id_recruitment, group_number, id_teacher, id_discipline, number_of_lesson, date_of_lesson, lesson_type, auditorium_number) FROM stdin;
+0001	1	P111	1	5	1	2021-01-19	лекция	302
+0001	1	P111	3	2	2	2021-04-30	практика	404
+0003	3	W333	4	3	1	2021-02-01	лекция	1
+0003	3	W333	4	3	3	2021-05-05	практика	1
+0002	2	B222	2	4	2	2021-02-10	лекция	205
+0002	2	B222	2	4	1	2021-03-18	лабораторная	210
+\.
+
+
+--
+-- TOC entry 3100 (class 0 OID 16704)
+-- Dependencies: 201
+-- Data for Name: program; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.program (id_program, program_type, program_name, form_of_study) FROM stdin;
+0001	очно	Физика	офлайн
+0002	заочно	Биология	офлайн
+0003	заочно	Web-программирование	онлайн
+\.
+
+
+--
+-- TOC entry 3111 (class 0 OID 16840)
+-- Dependencies: 212
+-- Data for Name: program_composition; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.program_composition (id_discipline, id_program, number_of_sem) FROM stdin;
+1	0001	2
+5	0001	1
+2	0001	2
+3	0003	1
+4	0002	1
+\.
+
+
+--
+-- TOC entry 3102 (class 0 OID 16715)
+-- Dependencies: 203
+-- Data for Name: recruitment; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.recruitment (id_program, id_recruitment, date_start, date_finish) FROM stdin;
+0001	1	2021-01-10	2021-05-31
+0002	2	2021-01-10	2021-05-31
+0003	3	2021-01-10	2021-03-31
+0003	4	2021-04-01	2021-07-31
+\.
+
+
+--
+-- TOC entry 3105 (class 0 OID 16766)
+-- Dependencies: 206
+-- Data for Name: student; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.student (id_student, student_name, student_passport, student_email, student_phone) FROM stdin;
+1	Лакиза Александр Николаевич	2421010101	alelakiza@yandex.ru	88005553535
+2	Пушкин Андрей Игоревич	5104998877	pushkaai@yandex.ru	\N
+3	Соболев Виктор Викторович	5104921833	sobvivi.@mail.ru	\N
+4	Кобелева Ирина Владимировна	5151221833	kobirina_v.@gmail.com	89022805555
+5	Игорева Анна Дмитриевна	7611221833	\N	89873214455
+\.
+
+
+--
+-- TOC entry 3106 (class 0 OID 16795)
+-- Dependencies: 207
+-- Data for Name: student_stay; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.student_stay (id_student, id_program, id_recruitment, group_number, student_status, id_document) FROM stdin;
+1	0001	1	P111	учится	P000001
+2	0001	1	P111	отчислился	P000002
+3	0002	2	B222	учится	B000003
+4	0003	3	W333	учится	W000004
+5	0003	3	W333	академ.отпуск	W000005
+\.
+
+
+--
+-- TOC entry 3103 (class 0 OID 16749)
+-- Dependencies: 204
+-- Data for Name: study_group; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.study_group (id_program, id_recruitment, group_number) FROM stdin;
+0001	1	P111
+0002	2	B222
+0003	3	W333
+0003	4	W334
+\.
+
+
+--
+-- TOC entry 3108 (class 0 OID 16823)
+-- Dependencies: 209
+-- Data for Name: teacher; Type: TABLE DATA; Schema: courses; Owner: postgres
+--
+
+COPY courses.teacher (id_teacher, teacher_name, teacher_position) FROM stdin;
+1	Козлова Светлана Викторовна	Преподаватель физики, Кандидат физ.наук
+2	Шерстнева Валентина Васильевна	Преподаватель биологии
+3	Зиновьев Евгений Олегович	Преподаватель механики
+4	Хамицевич Андрей Сергеевич	Преподаватель информатики
+5	Сизова Ольга Александровна	Преподаватель физ.химии
+\.
+
+
+--
+-- TOC entry 3124 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: discipline_id_discipline_seq; Type: SEQUENCE SET; Schema: courses; Owner: postgres
+--
+
+SELECT pg_catalog.setval('courses.discipline_id_discipline_seq', 6, true);
+
+
+--
+-- TOC entry 3125 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: recruitment_id_recruitment_seq; Type: SEQUENCE SET; Schema: courses; Owner: postgres
+--
+
+SELECT pg_catalog.setval('courses.recruitment_id_recruitment_seq', 4, true);
+
+
+--
+-- TOC entry 3126 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: student_id_student_seq; Type: SEQUENCE SET; Schema: courses; Owner: postgres
+--
+
+SELECT pg_catalog.setval('courses.student_id_student_seq', 5, true);
+
+
+--
+-- TOC entry 3127 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: teacher_id_teacher_seq; Type: SEQUENCE SET; Schema: courses; Owner: postgres
+--
+
+SELECT pg_catalog.setval('courses.teacher_id_teacher_seq', 5, true);
+
+
+--
+-- TOC entry 2916 (class 2606 OID 16946)
+-- Name: area area_area_address_check; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.area
+    ADD CONSTRAINT area_area_address_check CHECK (((area_address)::text = ANY ((ARRAY['онлайн'::character varying, 'Ул. Чайковского 47'::character varying, 'Биржевая линия 20'::character varying, 'Пр. Кронверкский 16'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2947 (class 2606 OID 16864)
+-- Name: area area_area_address_key; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.area
+    ADD CONSTRAINT area_area_address_key UNIQUE (area_address);
+
+
+--
+-- TOC entry 2917 (class 2606 OID 16947)
+-- Name: area area_area_name_check; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.area
+    ADD CONSTRAINT area_area_name_check CHECK (((area_name)::text = ANY ((ARRAY['онлайн'::character varying, 'чайка'::character varying, 'биржа'::character varying, 'кронва'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2949 (class 2606 OID 16862)
+-- Name: area area_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.area
+    ADD CONSTRAINT area_pkey PRIMARY KEY (area_address);
+
+
+--
+-- TOC entry 2918 (class 2606 OID 16945)
+-- Name: auditorium auditorium_auditorium_type_check; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.auditorium
+    ADD CONSTRAINT auditorium_auditorium_type_check CHECK (((auditorium_type)::text = ANY ((ARRAY['онлайн'::character varying, 'лекционная'::character varying, 'семинарная'::character varying, 'лабораторная'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2951 (class 2606 OID 16874)
+-- Name: auditorium audotorium_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.auditorium
+    ADD CONSTRAINT audotorium_pkey PRIMARY KEY (auditorium_number);
+
+
+--
+-- TOC entry 2941 (class 2606 OID 16839)
+-- Name: discipline discipline_id_discipline_key; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.discipline
+    ADD CONSTRAINT discipline_id_discipline_key UNIQUE (id_discipline);
+
+
+--
+-- TOC entry 2943 (class 2606 OID 16836)
+-- Name: discipline discipline_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.discipline
+    ADD CONSTRAINT discipline_pkey PRIMARY KEY (id_discipline);
+
+
+--
+-- TOC entry 2907 (class 2606 OID 16935)
+-- Name: program form_of_study; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.program
+    ADD CONSTRAINT form_of_study CHECK (((form_of_study)::text = ANY ((ARRAY['онлайн'::character varying, 'офлайн'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2920 (class 2606 OID 16940)
+-- Name: lesson lesson_lesson_type_check; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.lesson
+    ADD CONSTRAINT lesson_lesson_type_check CHECK (((lesson_type)::text = ANY ((ARRAY['лекция'::character varying, 'практика'::character varying, 'лабораторная'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2953 (class 2606 OID 16886)
+-- Name: lesson lesson_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_pkey PRIMARY KEY (id_program, id_recruitment, group_number, id_teacher, id_discipline, number_of_lesson, date_of_lesson);
+
+
+--
+-- TOC entry 2908 (class 2606 OID 16934)
+-- Name: program prog_type; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.program
+    ADD CONSTRAINT prog_type CHECK (((program_type)::text = ANY ((ARRAY['очно'::character varying, 'заочно'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2945 (class 2606 OID 16845)
+-- Name: program_composition program_composition_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.program_composition
+    ADD CONSTRAINT program_composition_pkey PRIMARY KEY (id_discipline, id_program);
+
+
+--
+-- TOC entry 2923 (class 2606 OID 16712)
+-- Name: program program_id_program_key; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.program
+    ADD CONSTRAINT program_id_program_key UNIQUE (id_program);
+
+
+--
+-- TOC entry 2925 (class 2606 OID 16710)
+-- Name: program program_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.program
+    ADD CONSTRAINT program_pkey PRIMARY KEY (id_program);
+
+
+--
+-- TOC entry 2927 (class 2606 OID 16748)
+-- Name: recruitment recruitment_id_recruitment_key; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.recruitment
+    ADD CONSTRAINT recruitment_id_recruitment_key UNIQUE (id_recruitment);
+
+
+--
+-- TOC entry 2929 (class 2606 OID 16721)
+-- Name: recruitment recruitment_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.recruitment
+    ADD CONSTRAINT recruitment_pkey PRIMARY KEY (id_program, id_recruitment);
+
+
+--
+-- TOC entry 2935 (class 2606 OID 16771)
+-- Name: student student_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student
+    ADD CONSTRAINT student_pkey PRIMARY KEY (id_student);
+
+
+--
+-- TOC entry 2912 (class 2606 OID 16936)
+-- Name: student_stay student_status; Type: CHECK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE courses.student_stay
+    ADD CONSTRAINT student_status CHECK (((student_status)::text = ANY ((ARRAY['учится'::character varying, 'отчислился'::character varying, 'академ.отпуск'::character varying, 'выпустился'::character varying])::text[]))) NOT VALID;
+
+
+--
+-- TOC entry 2937 (class 2606 OID 16800)
+-- Name: student_stay student_stay_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student_stay
+    ADD CONSTRAINT student_stay_pkey PRIMARY KEY (id_student, id_program, id_recruitment, group_number);
+
+
+--
+-- TOC entry 2931 (class 2606 OID 16794)
+-- Name: study_group study_group_group_number_key; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.study_group
+    ADD CONSTRAINT study_group_group_number_key UNIQUE (group_number);
+
+
+--
+-- TOC entry 2933 (class 2606 OID 16753)
+-- Name: study_group study_group_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.study_group
+    ADD CONSTRAINT study_group_pkey PRIMARY KEY (id_program, id_recruitment, group_number);
+
+
+--
+-- TOC entry 2939 (class 2606 OID 16828)
+-- Name: teacher teacher_pkey; Type: CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.teacher
+    ADD CONSTRAINT teacher_pkey PRIMARY KEY (id_teacher);
+
+
+--
+-- TOC entry 2963 (class 2606 OID 16875)
+-- Name: auditorium audotorium_area_address_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.auditorium
+    ADD CONSTRAINT audotorium_area_address_fkey FOREIGN KEY (area_address) REFERENCES courses.area(area_address);
+
+
+--
+-- TOC entry 2964 (class 2606 OID 16912)
+-- Name: lesson lesson_auditorium_number_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_auditorium_number_fkey FOREIGN KEY (auditorium_number) REFERENCES courses.auditorium(auditorium_number);
+
+
+--
+-- TOC entry 2967 (class 2606 OID 16897)
+-- Name: lesson lesson_group_number_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_group_number_fkey FOREIGN KEY (group_number) REFERENCES courses.study_group(group_number);
+
+
+--
+-- TOC entry 2969 (class 2606 OID 16907)
+-- Name: lesson lesson_id_discipline_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_id_discipline_fkey FOREIGN KEY (id_discipline) REFERENCES courses.discipline(id_discipline);
+
+
+--
+-- TOC entry 2965 (class 2606 OID 16887)
+-- Name: lesson lesson_id_program_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_id_program_fkey FOREIGN KEY (id_program) REFERENCES courses.program(id_program);
+
+
+--
+-- TOC entry 2966 (class 2606 OID 16892)
+-- Name: lesson lesson_id_recruitment_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_id_recruitment_fkey FOREIGN KEY (id_recruitment) REFERENCES courses.recruitment(id_recruitment);
+
+
+--
+-- TOC entry 2968 (class 2606 OID 16902)
+-- Name: lesson lesson_id_teacher_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.lesson
+    ADD CONSTRAINT lesson_id_teacher_fkey FOREIGN KEY (id_teacher) REFERENCES courses.teacher(id_teacher);
+
+
+--
+-- TOC entry 2961 (class 2606 OID 16846)
+-- Name: program_composition program_composition_id_discipline_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.program_composition
+    ADD CONSTRAINT program_composition_id_discipline_fkey FOREIGN KEY (id_discipline) REFERENCES courses.discipline(id_discipline);
+
+
+--
+-- TOC entry 2962 (class 2606 OID 16851)
+-- Name: program_composition program_composition_id_program_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.program_composition
+    ADD CONSTRAINT program_composition_id_program_fkey FOREIGN KEY (id_program) REFERENCES courses.program(id_program);
+
+
+--
+-- TOC entry 2954 (class 2606 OID 16722)
+-- Name: recruitment recruitment_id_program_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.recruitment
+    ADD CONSTRAINT recruitment_id_program_fkey FOREIGN KEY (id_program) REFERENCES courses.program(id_program);
+
+
+--
+-- TOC entry 2960 (class 2606 OID 16816)
+-- Name: student_stay student_stay_group_number_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student_stay
+    ADD CONSTRAINT student_stay_group_number_fkey FOREIGN KEY (group_number) REFERENCES courses.study_group(group_number);
+
+
+--
+-- TOC entry 2958 (class 2606 OID 16806)
+-- Name: student_stay student_stay_id_program_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student_stay
+    ADD CONSTRAINT student_stay_id_program_fkey FOREIGN KEY (id_program) REFERENCES courses.program(id_program);
+
+
+--
+-- TOC entry 2959 (class 2606 OID 16811)
+-- Name: student_stay student_stay_id_recruitment_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student_stay
+    ADD CONSTRAINT student_stay_id_recruitment_fkey FOREIGN KEY (id_recruitment) REFERENCES courses.recruitment(id_recruitment);
+
+
+--
+-- TOC entry 2957 (class 2606 OID 16801)
+-- Name: student_stay student_stay_id_student_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.student_stay
+    ADD CONSTRAINT student_stay_id_student_fkey FOREIGN KEY (id_student) REFERENCES courses.student(id_student);
+
+
+--
+-- TOC entry 2955 (class 2606 OID 16754)
+-- Name: study_group study_group_id_program_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.study_group
+    ADD CONSTRAINT study_group_id_program_fkey FOREIGN KEY (id_program) REFERENCES courses.program(id_program);
+
+
+--
+-- TOC entry 2956 (class 2606 OID 16759)
+-- Name: study_group study_group_id_recruitment_fkey; Type: FK CONSTRAINT; Schema: courses; Owner: postgres
+--
+
+ALTER TABLE ONLY courses.study_group
+    ADD CONSTRAINT study_group_id_recruitment_fkey FOREIGN KEY (id_recruitment) REFERENCES courses.recruitment(id_recruitment);
+
+
+-- Completed on 2021-05-03 18:33:17 MSK
+
+--
+-- PostgreSQL database dump complete
+--
+
