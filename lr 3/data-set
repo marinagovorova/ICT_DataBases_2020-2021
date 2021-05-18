@@ -1,0 +1,395 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.6
+-- Dumped by pg_dump version 12.6
+
+-- Started on 2021-05-04 14:10:06
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 6 (class 2615 OID 16411)
+-- Name: data1; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA data1;
+
+
+ALTER SCHEMA data1 OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 209 (class 1259 OID 16548)
+-- Name: customer; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1.customer (
+    id_customer integer NOT NULL,
+    name character varying(70) NOT NULL,
+    passport character varying(20) NOT NULL,
+    address character varying(70) NOT NULL
+);
+
+
+ALTER TABLE data1.customer OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16495)
+-- Name: Комната; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."Комната" (
+    "номер_комнаты" integer NOT NULL,
+    "состояние_комнаты" smallint NOT NULL,
+    "Название_тип" character varying(20) NOT NULL,
+    " Название_отель" character(1) NOT NULL
+);
+
+
+ALTER TABLE data1."Комната" OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16490)
+-- Name: Отель; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."Отель" (
+    "Название_отель" character(1) NOT NULL,
+    "Тип_отеля" character varying(20) NOT NULL,
+    "Адрес_отель" character varying(70) NOT NULL
+);
+
+
+ALTER TABLE data1."Отель" OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16460)
+-- Name: Регистрания; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."Регистрания" (
+    "ID_регистрания" integer NOT NULL,
+    "данные об оплате коммунальных усл" character varying(3000) NOT NULL,
+    "дата_бронирования" date NOT NULL,
+    "дата_отъезда" date NOT NULL,
+    "дата_заезда" date NOT NULL,
+    "Табельный_номер" integer NOT NULL,
+    "id_Акции" integer,
+    "номер_комнаты" integer NOT NULL,
+    id_customer integer NOT NULL
+);
+
+
+ALTER TABLE data1."Регистрания" OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16468)
+-- Name: Сотрудник; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."Сотрудник" (
+    "Табельный_номер" integer NOT NULL,
+    "ФИО" character varying(70) NOT NULL,
+    "Номер_телефон" character varying NOT NULL
+);
+
+
+ALTER TABLE data1."Сотрудник" OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16500)
+-- Name: Тип комнаты; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."Тип комнаты" (
+    "Название_тип" character varying(20) NOT NULL,
+    "Количество_мест" integer NOT NULL,
+    "удобства" character varying(3000) NOT NULL,
+    "цена_за_час" numeric NOT NULL
+);
+
+
+ALTER TABLE data1."Тип комнаты" OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16482)
+-- Name: акации; Type: TABLE; Schema: data1; Owner: postgres
+--
+
+CREATE TABLE data1."акации" (
+    "id_Акции" integer NOT NULL,
+    "время_начала" date,
+    "время_окончания" date,
+    "Описание_акции" character varying(3000)
+);
+
+
+ALTER TABLE data1."акации" OWNER TO postgres;
+
+--
+-- TOC entry 2871 (class 0 OID 16548)
+-- Dependencies: 209
+-- Data for Name: customer; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1.customer (id_customer, name, passport, address) FROM stdin;
+1	nguyen tien dat	C123456	vietnam
+2	vu minh truong	C123457\n	vietnam
+3	pham chi thanh	C123458	vietnam
+\.
+
+
+--
+-- TOC entry 2869 (class 0 OID 16495)
+-- Dependencies: 207
+-- Data for Name: Комната; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."Комната" ("номер_комнаты", "состояние_комнаты", "Название_тип", " Название_отель") FROM stdin;
+3241	0	хорошо	A
+3240	1	хорошо	A
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 16490)
+-- Dependencies: 206
+-- Data for Name: Отель; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."Отель" ("Название_отель", "Тип_отеля", "Адрес_отель") FROM stdin;
+A	5*	saint peterburg
+\.
+
+
+--
+-- TOC entry 2865 (class 0 OID 16460)
+-- Dependencies: 203
+-- Data for Name: Регистрания; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."Регистрания" ("ID_регистрания", "данные об оплате коммунальных усл", "дата_бронирования", "дата_отъезда", "дата_заезда", "Табельный_номер", "id_Акции", "номер_комнаты", id_customer) FROM stdin;
+1	adaaa	2020-01-04	2020-03-04	2020-02-04	1	\N	3240	1
+\.
+
+
+--
+-- TOC entry 2866 (class 0 OID 16468)
+-- Dependencies: 204
+-- Data for Name: Сотрудник; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."Сотрудник" ("Табельный_номер", "ФИО", "Номер_телефон") FROM stdin;
+1	thien	8963123456
+2	tuan	8963123456
+3	quang anh	8963123456\n
+4	lan anh	8963123456
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 16500)
+-- Dependencies: 208
+-- Data for Name: Тип комнаты; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."Тип комнаты" ("Название_тип", "Количество_мест", "удобства", "цена_за_час") FROM stdin;
+хорошо	2	полный	3000
+молодец	4	полный	5000
+\.
+
+
+--
+-- TOC entry 2867 (class 0 OID 16482)
+-- Dependencies: 205
+-- Data for Name: акации; Type: TABLE DATA; Schema: data1; Owner: postgres
+--
+
+COPY data1."акации" ("id_Акции", "время_начала", "время_окончания", "Описание_акции") FROM stdin;
+1	2020-06-04	2020-07-04	50%
+2	2020-06-05	2020-10-07	20%
+\.
+
+
+--
+-- TOC entry 2732 (class 2606 OID 16552)
+-- Name: customer customer_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1.customer
+    ADD CONSTRAINT customer_pkey PRIMARY KEY (id_customer);
+
+
+--
+-- TOC entry 2717 (class 2606 OID 16542)
+-- Name: Тип комнаты Количество мест; Type: CHECK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE data1."Тип комнаты"
+    ADD CONSTRAINT "Количество мест" CHECK ((("Количество_мест" <= 1) OR ("Количество_мест" >= 0))) NOT VALID;
+
+
+--
+-- TOC entry 2728 (class 2606 OID 16499)
+-- Name: Комната Комната_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Комната"
+    ADD CONSTRAINT "Комната_pkey" PRIMARY KEY ("номер_комнаты");
+
+
+--
+-- TOC entry 2726 (class 2606 OID 16494)
+-- Name: Отель Отель_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Отель"
+    ADD CONSTRAINT "Отель_pkey" PRIMARY KEY ("Название_отель");
+
+
+--
+-- TOC entry 2720 (class 2606 OID 16467)
+-- Name: Регистрания Регистрания_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Регистрания"
+    ADD CONSTRAINT "Регистрания_pkey" PRIMARY KEY ("ID_регистрания");
+
+
+--
+-- TOC entry 2722 (class 2606 OID 16475)
+-- Name: Сотрудник Сотрудник_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Сотрудник"
+    ADD CONSTRAINT "Сотрудник_pkey" PRIMARY KEY ("Табельный_номер");
+
+
+--
+-- TOC entry 2730 (class 2606 OID 16507)
+-- Name: Тип комнаты Тип комнаты_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Тип комнаты"
+    ADD CONSTRAINT "Тип комнаты_pkey" PRIMARY KEY ("Название_тип");
+
+
+--
+-- TOC entry 2724 (class 2606 OID 16489)
+-- Name: акации акации_pkey; Type: CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."акации"
+    ADD CONSTRAINT "акации_pkey" PRIMARY KEY ("id_Акции");
+
+
+--
+-- TOC entry 2716 (class 2606 OID 16538)
+-- Name: акации время окончания; Type: CHECK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE data1."акации"
+    ADD CONSTRAINT "время окончания" CHECK (("время_окончания" > "время_начала")) NOT VALID;
+
+
+--
+-- TOC entry 2714 (class 2606 OID 16558)
+-- Name: Регистрания дата_бронирования; Type: CHECK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE data1."Регистрания"
+    ADD CONSTRAINT "дата_бронирования" CHECK (("дата_бронирования" <= "дата_заезда")) NOT VALID;
+
+
+--
+-- TOC entry 2715 (class 2606 OID 16547)
+-- Name: Регистрания дата_отъезда; Type: CHECK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE data1."Регистрания"
+    ADD CONSTRAINT "дата_отъезда" CHECK (("дата_отъезда" >= "дата_заезда")) NOT VALID;
+
+
+--
+-- TOC entry 2718 (class 2606 OID 16543)
+-- Name: Тип комнаты цена за час; Type: CHECK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE data1."Тип комнаты"
+    ADD CONSTRAINT "цена за час" CHECK (("цена_за_час" > (0)::numeric)) NOT VALID;
+
+
+--
+-- TOC entry 2738 (class 2606 OID 16533)
+-- Name: Комната Комната_ Название_отель_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Комната"
+    ADD CONSTRAINT "Комната_ Название_отель_fkey" FOREIGN KEY (" Название_отель") REFERENCES data1."Отель"("Название_отель") NOT VALID;
+
+
+--
+-- TOC entry 2737 (class 2606 OID 16528)
+-- Name: Комната Комната_Название_тип_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Комната"
+    ADD CONSTRAINT "Комната_Название_тип_fkey" FOREIGN KEY ("Название_тип") REFERENCES data1."Тип комнаты"("Название_тип") NOT VALID;
+
+
+--
+-- TOC entry 2736 (class 2606 OID 16553)
+-- Name: Регистрания Регистрания_id_customer_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Регистрания"
+    ADD CONSTRAINT "Регистрания_id_customer_fkey" FOREIGN KEY (id_customer) REFERENCES data1.customer(id_customer) NOT VALID;
+
+
+--
+-- TOC entry 2733 (class 2606 OID 16508)
+-- Name: Регистрания Регистрания_id_Акции_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Регистрания"
+    ADD CONSTRAINT "Регистрания_id_Акции_fkey" FOREIGN KEY ("id_Акции") REFERENCES data1."акации"("id_Акции") NOT VALID;
+
+
+--
+-- TOC entry 2734 (class 2606 OID 16513)
+-- Name: Регистрания Регистрания_Табельный_номер_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Регистрания"
+    ADD CONSTRAINT "Регистрания_Табельный_номер_fkey" FOREIGN KEY ("Табельный_номер") REFERENCES data1."Сотрудник"("Табельный_номер") NOT VALID;
+
+
+--
+-- TOC entry 2735 (class 2606 OID 16523)
+-- Name: Регистрания Регистрания_номер_комнаты_fkey; Type: FK CONSTRAINT; Schema: data1; Owner: postgres
+--
+
+ALTER TABLE ONLY data1."Регистрания"
+    ADD CONSTRAINT "Регистрания_номер_комнаты_fkey" FOREIGN KEY ("номер_комнаты") REFERENCES data1."Комната"("номер_комнаты") NOT VALID;
+
+
+-- Completed on 2021-05-04 14:10:06
+
+--
+-- PostgreSQL database dump complete
+--
+
