@@ -129,10 +129,13 @@
 Подробно задание описано в [тексте работы](https://drive.google.com/file/d/1pOsSjHsG7hFKaKH6Q1CV24NfuNxlscNp/view?usp=sharing).
 
 Отчетные материалы (для пул-реквеста) включают файл отчета по лабораторной работе (PDF) и скрипт для работы с БД.
+##  Тема 9  ПРИВИЛЕГИИ ПОЛЬЗОВАТЕЛЕЙ
 ###  Лекция  9 Привилегии
 Материалы лекции доступны [здесь](https://drive.google.com/drive/folders/1Z6FGIJjmhUZH3KegHH1LeQVRsMz0Fd25?usp=sharing)
+##  Тема 10 ПРОЦЕДУРЫ. ФУНКЦИИ. ТРИГГЕРЫ
 ###  Лекция  10 Процедуры. Функции. Триггеры
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1A-Z5_gD717zu6M6V39EzTcYCPj4rycQv/view?usp=sharing)
+##  Тема 11 ВВЕДЕНИЕ В NOSQL. СУБД MONGODB
 ###  Лекция  11 Введение в NqSQL. СУБД MongoDB
 Материалы лекции доступны [здесь](https://drive.google.com/file/d/1pXwmd3AWB2PaR45H6XKJ3OvtkC0_9g2S/view?usp=sharing)
 ## Требования к отчетным материалам по лабораторным работам
