@@ -1,0 +1,546 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-06-01 00:59:20
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'WIN1252';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+--
+-- TOC entry 3060 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 203 (class 1259 OID 16405)
+-- Name: car; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.car (
+    id_car integer NOT NULL,
+    car_mileage integer NOT NULL,
+    "date_of_TI" date NOT NULL,
+    car_year integer NOT NULL,
+    gos_number character(6) NOT NULL,
+    id_model integer NOT NULL
+);
+
+
+ALTER TABLE public.car OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16395)
+-- Name: driver; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.driver (
+    id_driver integer NOT NULL,
+    driver_name character(100) NOT NULL,
+    driver_address character(100) NOT NULL,
+    driver_phone_number character(11) NOT NULL,
+    driver_passport character(11) NOT NULL,
+    category character(3) NOT NULL
+);
+
+
+ALTER TABLE public.driver OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16430)
+-- Name: model; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.model (
+    id_model integer NOT NULL,
+    name_brand character(20) NOT NULL,
+    name_model character(50) NOT NULL,
+    specifications character(100) NOT NULL
+);
+
+
+ALTER TABLE public.model OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16415)
+-- Name: passenger; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.passenger (
+    id_passenger integer NOT NULL,
+    pass_phone_number character(11) NOT NULL
+);
+
+
+ALTER TABLE public.passenger OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16425)
+-- Name: period; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.period (
+    id_period integer NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    id_car integer NOT NULL,
+    id_driver integer NOT NULL
+);
+
+
+ALTER TABLE public.period OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16420)
+-- Name: tariff; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.tariff (
+    id_tariff integer NOT NULL,
+    price integer NOT NULL,
+    tariff_name character(50) NOT NULL
+);
+
+
+ALTER TABLE public.tariff OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16410)
+-- Name: taxi_call; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.taxi_call (
+    end_time time with time zone NOT NULL,
+    call_date date NOT NULL,
+    start_time time with time zone NOT NULL,
+    distance integer NOT NULL,
+    "from" character(100) NOT NULL,
+    where_to character(100) NOT NULL,
+    id_taxi_call integer NOT NULL,
+    id_worker integer NOT NULL,
+    id_car integer NOT NULL,
+    id_passenger integer NOT NULL,
+    id_tariff integer NOT NULL
+);
+
+
+ALTER TABLE public.taxi_call OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 16400)
+-- Name: worker; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.worker (
+    id_worker integer NOT NULL,
+    worker_address character(100) NOT NULL,
+    worker_passport character(11) NOT NULL,
+    worker_name character(100) NOT NULL,
+    worker_phone_number character(11) NOT NULL
+);
+
+
+ALTER TABLE public.worker OWNER TO postgres;
+
+--
+-- TOC entry 3049 (class 0 OID 16405)
+-- Dependencies: 203
+-- Data for Name: car; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.car (id_car, car_mileage, "date_of_TI", car_year, gos_number, id_model) FROM stdin;
+1	4567	2021-01-30	2018	a576kc	3
+2	579	2021-01-15	2018	c125cc	1
+3	5938	2021-03-27	2020	k983at	2
+4	736	2021-02-01	2018	a676ka	4
+5	7353	2021-02-01	2018	a783ka	4
+6	3782	2021-02-07	2019	p283ee	5
+\.
+
+
+--
+-- TOC entry 3047 (class 0 OID 16395)
+-- Dependencies: 201
+-- Data for Name: driver; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.driver (id_driver, driver_name, driver_address, driver_phone_number, driver_passport, category) FROM stdin;
+1	Ivanov Ivan                                                                                         	Lenina 42                                                                                           	79997376490	9814 574859	B  
+2	Mikhailov Yuriy                                                                                     	Moskovskaya 72/2                                                                                    	79243652332	9813 749387	C  
+3	Popova Kseniya                                                                                      	Lomonosova 22                                                                                       	79142387847	9820 374028	B  
+4	Kozlov Dmitriy                                                                                      	Stachek 17                                                                                          	78653427646	9808 378273	BE 
+5	Egorova Mariya                                                                                      	Lermontova 67/4                                                                                     	79654657967	9810 897652	D  
+\.
+
+
+--
+-- TOC entry 3054 (class 0 OID 16430)
+-- Dependencies: 208
+-- Data for Name: model; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.model (id_model, name_brand, name_model, specifications) FROM stdin;
+1	Toyota              	Land Cruiser Prado                                	automat                                                                                             
+2	Honda               	Horizon                                           	automat                                                                                             
+3	Renault             	Logan                                             	mechanics                                                                                           
+4	Skoda               	Octavia                                           	mechanics                                                                                           
+5	Lexus               	IS                                                	automat                                                                                             
+\.
+
+
+--
+-- TOC entry 3051 (class 0 OID 16415)
+-- Dependencies: 205
+-- Data for Name: passenger; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.passenger (id_passenger, pass_phone_number) FROM stdin;
+1	79256783498
+2	79874763425
+3	79453764578
+4	89135627856
+5	98725386789
+\.
+
+
+--
+-- TOC entry 3053 (class 0 OID 16425)
+-- Dependencies: 207
+-- Data for Name: period; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.period (id_period, start_date, end_date, id_car, id_driver) FROM stdin;
+1	2021-01-08	2021-01-31	6	1
+2	2021-01-08	2021-01-31	1	3
+3	2021-02-01	2021-02-15	2	4
+4	2021-02-01	2021-02-15	3	2
+5	2021-02-01	2021-02-15	4	5
+\.
+
+
+--
+-- TOC entry 3052 (class 0 OID 16420)
+-- Dependencies: 206
+-- Data for Name: tariff; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.tariff (id_tariff, price, tariff_name) FROM stdin;
+1	50	day                                               
+2	70	night                                             
+3	80	morning                                           
+4	100	rush hour                                         
+\.
+
+
+--
+-- TOC entry 3050 (class 0 OID 16410)
+-- Dependencies: 204
+-- Data for Name: taxi_call; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.taxi_call (end_time, call_date, start_time, distance, "from", where_to, id_taxi_call, id_worker, id_car, id_passenger, id_tariff) FROM stdin;
+13:25:00+03	2021-01-15	13:10:00+03	1200	Liteinaya 45/3                                                                                      	Lomonosova 9                                                                                        	1	1	3	1	4
+09:01:00+03	2021-01-20	08:16:00+03	10470	Aptekarskiy per 17                                                                                  	Moskovskaya 73a                                                                                     	2	2	1	2	3
+23:06:00+03	2021-01-20	22:34:00+03	5400	Pravdy 12                                                                                           	Stachek 29                                                                                          	3	1	4	3	2
+\.
+
+
+--
+-- TOC entry 3048 (class 0 OID 16400)
+-- Dependencies: 202
+-- Data for Name: worker; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.worker (id_worker, worker_address, worker_passport, worker_name, worker_phone_number) FROM stdin;
+1	Larina 69                                                                                           	9725 736478	Petrova Larisa                                                                                      	79253775634
+2	Ammosova 4/2                                                                                        	7837 637687	Soldatova Alena                                                                                     	79635672395
+\.
+
+
+--
+-- TOC entry 2895 (class 2606 OID 16409)
+-- Name: car car_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.car
+    ADD CONSTRAINT car_pkey PRIMARY KEY (id_car);
+
+
+--
+-- TOC entry 2897 (class 2606 OID 24659)
+-- Name: car car_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.car
+    ADD CONSTRAINT car_unique UNIQUE (gos_number);
+
+
+--
+-- TOC entry 2878 (class 2606 OID 16490)
+-- Name: car chk_car_mileage; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.car
+    ADD CONSTRAINT chk_car_mileage CHECK ((car_mileage > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2879 (class 2606 OID 16487)
+-- Name: car chk_car_year; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.car
+    ADD CONSTRAINT chk_car_year CHECK ((car_year >= 2015)) NOT VALID;
+
+
+--
+-- TOC entry 2877 (class 2606 OID 24657)
+-- Name: driver chk_cat ; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.driver
+    ADD CONSTRAINT "chk_cat " CHECK ((category = ANY (ARRAY['B'::bpchar, 'BE'::bpchar, 'C'::bpchar, 'D'::bpchar]))) NOT VALID;
+
+
+--
+-- TOC entry 2880 (class 2606 OID 16491)
+-- Name: car chk_date_of_TI; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.car
+    ADD CONSTRAINT "chk_date_of_TI" CHECK (("date_of_TI" > '2021-01-01'::date)) NOT VALID;
+
+
+--
+-- TOC entry 2881 (class 2606 OID 16483)
+-- Name: taxi_call chk_distance; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.taxi_call
+    ADD CONSTRAINT chk_distance CHECK ((distance > 100)) NOT VALID;
+
+
+--
+-- TOC entry 2885 (class 2606 OID 16482)
+-- Name: period chk_end_date; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.period
+    ADD CONSTRAINT chk_end_date CHECK ((end_date >= start_date)) NOT VALID;
+
+
+--
+-- TOC entry 2882 (class 2606 OID 16481)
+-- Name: taxi_call chk_end_time; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.taxi_call
+    ADD CONSTRAINT chk_end_time CHECK ((end_time > start_time)) NOT VALID;
+
+
+--
+-- TOC entry 2884 (class 2606 OID 16489)
+-- Name: tariff chk_price; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.tariff
+    ADD CONSTRAINT chk_price CHECK ((price > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2883 (class 2606 OID 16435)
+-- Name: taxi_call chk_taxi_calls; Type: CHECK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.taxi_call
+    ADD CONSTRAINT chk_taxi_calls CHECK ((id_taxi_call > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2887 (class 2606 OID 16399)
+-- Name: driver driver_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.driver
+    ADD CONSTRAINT driver_pkey PRIMARY KEY (id_driver);
+
+
+--
+-- TOC entry 2889 (class 2606 OID 24645)
+-- Name: driver driver_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.driver
+    ADD CONSTRAINT driver_unique UNIQUE (driver_passport, driver_phone_number);
+
+
+--
+-- TOC entry 2909 (class 2606 OID 16434)
+-- Name: model model_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.model
+    ADD CONSTRAINT model_pkey PRIMARY KEY (id_model);
+
+
+--
+-- TOC entry 2901 (class 2606 OID 16419)
+-- Name: passenger passenger_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.passenger
+    ADD CONSTRAINT passenger_pkey PRIMARY KEY (id_passenger);
+
+
+--
+-- TOC entry 2903 (class 2606 OID 24678)
+-- Name: passenger passenger_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.passenger
+    ADD CONSTRAINT passenger_unique UNIQUE (pass_phone_number);
+
+
+--
+-- TOC entry 2907 (class 2606 OID 16429)
+-- Name: period period_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.period
+    ADD CONSTRAINT period_pkey PRIMARY KEY (id_period);
+
+
+--
+-- TOC entry 2905 (class 2606 OID 16424)
+-- Name: tariff tariff_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tariff
+    ADD CONSTRAINT tariff_pkey PRIMARY KEY (id_tariff);
+
+
+--
+-- TOC entry 2899 (class 2606 OID 16414)
+-- Name: taxi_call taxi_call_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxi_call
+    ADD CONSTRAINT taxi_call_pkey PRIMARY KEY (id_taxi_call);
+
+
+--
+-- TOC entry 2891 (class 2606 OID 16404)
+-- Name: worker worker_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.worker
+    ADD CONSTRAINT worker_pkey PRIMARY KEY (id_worker);
+
+
+--
+-- TOC entry 2893 (class 2606 OID 24714)
+-- Name: worker worker_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.worker
+    ADD CONSTRAINT worker_unique UNIQUE (worker_passport, worker_phone_number);
+
+
+--
+-- TOC entry 2912 (class 2606 OID 16456)
+-- Name: taxi_call id_car; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxi_call
+    ADD CONSTRAINT id_car FOREIGN KEY (id_car) REFERENCES public.car(id_car) NOT VALID;
+
+
+--
+-- TOC entry 2915 (class 2606 OID 16471)
+-- Name: period id_car; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.period
+    ADD CONSTRAINT id_car FOREIGN KEY (id_car) REFERENCES public.car(id_car) NOT VALID;
+
+
+--
+-- TOC entry 2916 (class 2606 OID 16476)
+-- Name: period id_driver; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.period
+    ADD CONSTRAINT id_driver FOREIGN KEY (id_driver) REFERENCES public.driver(id_driver) NOT VALID;
+
+
+--
+-- TOC entry 2910 (class 2606 OID 16505)
+-- Name: car id_model; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.car
+    ADD CONSTRAINT id_model FOREIGN KEY (id_model) REFERENCES public.model(id_model) NOT VALID;
+
+
+--
+-- TOC entry 2913 (class 2606 OID 16461)
+-- Name: taxi_call id_passenger; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxi_call
+    ADD CONSTRAINT id_passenger FOREIGN KEY (id_passenger) REFERENCES public.passenger(id_passenger) NOT VALID;
+
+
+--
+-- TOC entry 2914 (class 2606 OID 16466)
+-- Name: taxi_call id_tariff; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxi_call
+    ADD CONSTRAINT id_tariff FOREIGN KEY (id_tariff) REFERENCES public.tariff(id_tariff) NOT VALID;
+
+
+--
+-- TOC entry 2911 (class 2606 OID 16451)
+-- Name: taxi_call id_worker; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.taxi_call
+    ADD CONSTRAINT id_worker FOREIGN KEY (id_worker) REFERENCES public.worker(id_worker) NOT VALID;
+
+
+-- Completed on 2021-06-01 00:59:21
+
+--
+-- PostgreSQL database dump complete
+--
+
