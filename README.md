@@ -10,6 +10,8 @@
 [Лабораторные работы](https://drive.google.com/drive/folders/1fqUNv073SsWJf16RAA_7RujEtSnmix_p?usp=sharing) - задания, оцениваемые преподавателем.
 
 [Практические задания](https://drive.google.com/drive/folders/1-wi0hfgI8VVnLYAxiVe2COEi5q1Zj4Oh?usp=sharing) - задания, которые желательно выполнить перед выполнением лабораторной работы для того, чтобы освоить тему.
+
+[Сожержание экзамена](https://drive.google.com/file/d/14m6-SAheSPk309dQpNosJSmmP8BhSNYb/view?usp=sharing) - перечень тем для подготовки к экзамену.
 ## ВВЕДЕНИЕ
 1. [Актуальность проблематики АИС и лежащих в их основе БД](https://drive.google.com/file/d/1Ln0K7m9YBWHZxdHDSuoRuZrH62x4CClc/view?usp=sharing)
 2. [Состав и фукции СУБД. Трехуровневая архитектура БД и СУБД (часть 1)](https://drive.google.com/file/d/1H7Fo0BUV8qcpv9V8Dd4t-Qa2NGTTtixd/view?usp=sharing)
