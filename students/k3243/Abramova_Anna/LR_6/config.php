@@ -2,7 +2,7 @@
     class dbconfig
     {
         public static $dbuser = 'postgres';
-        public static $dbpass = 'Artek1925';
+        public static $dbpass = '********';
         public static $host = 'localhost';
         public static $dbname = 'postgres';
     }
