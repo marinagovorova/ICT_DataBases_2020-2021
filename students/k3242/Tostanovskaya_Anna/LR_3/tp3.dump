@@ -1,0 +1,440 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.7
+-- Dumped by pg_dump version 12.7
+
+-- Started on 2021-06-16 23:39:48
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 6 (class 2615 OID 16394)
+-- Name: tp3; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA tp3;
+
+
+ALTER SCHEMA tp3 OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 210 (class 1259 OID 16451)
+-- Name: cab_ride; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.cab_ride (
+    id_ride smallint NOT NULL,
+    ride_date date,
+    time_start_ride time without time zone,
+    time_end_ride time without time zone,
+    "from" character varying(15),
+    "to" character varying(15),
+    distance smallint,
+    id_tariff smallint NOT NULL,
+    id_operator smallint NOT NULL,
+    id_car smallint NOT NULL,
+    pass_phone character varying(15) NOT NULL
+);
+
+
+ALTER TABLE tp3.cab_ride OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16407)
+-- Name: car; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.car (
+    id_car smallint NOT NULL,
+    year_manuf smallint,
+    mileage smallint,
+    to_date date,
+    id_model smallint NOT NULL
+);
+
+
+ALTER TABLE tp3.car OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16395)
+-- Name: driver; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.driver (
+    id_driver smallint NOT NULL,
+    name character varying(30),
+    adress character varying(30),
+    passport character varying(10),
+    phone_num character varying(15),
+    category character varying(10)
+);
+
+
+ALTER TABLE tp3.driver OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16398)
+-- Name: model_list; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.model_list (
+    id_model smallint NOT NULL,
+    manufacturer character varying(10),
+    model character varying(10),
+    specs character varying(30)
+);
+
+
+ALTER TABLE tp3.model_list OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 16436)
+-- Name: passenger; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.passenger (
+    pass_phone character varying(15) NOT NULL,
+    name character varying(10)
+);
+
+
+ALTER TABLE tp3.passenger OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 16421)
+-- Name: schedule; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.schedule (
+    id_shift smallint NOT NULL,
+    date_smena_start date,
+    date_smena_end date,
+    time_smena_start time without time zone,
+    time_smena_end time without time zone,
+    id_car integer NOT NULL,
+    id_driver integer NOT NULL
+);
+
+
+ALTER TABLE tp3.schedule OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 16441)
+-- Name: staff; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.staff (
+    id_operator smallint NOT NULL,
+    name_operator character varying(10),
+    adress character varying(100),
+    phone_number character varying(15),
+    passport character varying(10),
+    "position" character varying(40)
+);
+
+
+ALTER TABLE tp3.staff OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 16446)
+-- Name: tariff; Type: TABLE; Schema: tp3; Owner: postgres
+--
+
+CREATE TABLE tp3.tariff (
+    id_tariff smallint NOT NULL,
+    title character varying(15),
+    price smallint,
+    date_tariff_start date,
+    date_tariff_end date
+);
+
+
+ALTER TABLE tp3.tariff OWNER TO postgres;
+
+--
+-- TOC entry 2873 (class 0 OID 16451)
+-- Dependencies: 210
+-- Data for Name: cab_ride; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.cab_ride (id_ride, ride_date, time_start_ride, time_end_ride, "from", "to", distance, id_tariff, id_operator, id_car, pass_phone) FROM stdin;
+1	2020-09-21	12:33:00	12:50:00	A	B	9	3	3	9	9213254780
+2	2020-09-22	21:00:00	22:14:00	B	C	19	2	3	777	9007795544
+3	2020-09-21	14:47:00	15:02:00	C	A	4	2	2	777	9098765432
+\.
+
+
+--
+-- TOC entry 2868 (class 0 OID 16407)
+-- Dependencies: 205
+-- Data for Name: car; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.car (id_car, year_manuf, mileage, to_date, id_model) FROM stdin;
+678	2009	1795	2016-05-31	3
+777	2013	1006	2019-07-01	1
+9	2015	907	2020-10-24	2
+\.
+
+
+--
+-- TOC entry 2866 (class 0 OID 16395)
+-- Dependencies: 203
+-- Data for Name: driver; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.driver (id_driver, name, adress, passport, phone_num, category) FROM stdin;
+1	Артем	Михайленко	5678345678	9564439705	первая
+2	Василий	Кожевенный	5004358600	9210958764	высшая
+3	Любовь	Шмидт	7809654476	9674351280	
+\.
+
+
+--
+-- TOC entry 2867 (class 0 OID 16398)
+-- Dependencies: 204
+-- Data for Name: model_list; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.model_list (id_model, manufacturer, model, specs) FROM stdin;
+1	bmw	x6	\N
+2	renault	logan	требует ремонта
+3	kia	rio	есть детское кресло
+\.
+
+
+--
+-- TOC entry 2870 (class 0 OID 16436)
+-- Dependencies: 207
+-- Data for Name: passenger; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.passenger (pass_phone, name) FROM stdin;
+9007795544	Антонина
+9213254780	
+9098765432	
+\.
+
+
+--
+-- TOC entry 2869 (class 0 OID 16421)
+-- Dependencies: 206
+-- Data for Name: schedule; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.schedule (id_shift, date_smena_start, date_smena_end, time_smena_start, time_smena_end, id_car, id_driver) FROM stdin;
+1	2020-09-21	2020-09-22	09:10:00	19:10:00	678	1
+3	2020-09-22	2020-09-23	07:00:00	18:50:00	777	2
+2	2020-09-21	2020-09-22	19:30:00	09:40:00	9	3
+\.
+
+
+--
+-- TOC entry 2871 (class 0 OID 16441)
+-- Dependencies: 208
+-- Data for Name: staff; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.staff (id_operator, name_operator, adress, phone_number, passport, "position") FROM stdin;
+1	Никита	ул Суворова, д 1	9345679830	1234567890	оператор
+2	Арсений	ул Плесецкая, д 8	9898989898	0987654321	оператор
+3	Елизавета	Коломяжский проспект, д 84к1	9659302740	6307885544	старший оператор
+\.
+
+
+--
+-- TOC entry 2872 (class 0 OID 16446)
+-- Dependencies: 209
+-- Data for Name: tariff; Type: TABLE DATA; Schema: tp3; Owner: postgres
+--
+
+COPY tp3.tariff (id_tariff, title, price, date_tariff_start, date_tariff_end) FROM stdin;
+1	акционный	5	2019-10-30	2020-01-06
+2	эконом	6	2020-01-06	2021-01-06
+3	комфорт	8	2020-01-06	2021-01-06
+\.
+
+
+--
+-- TOC entry 2716 (class 2606 OID 16476)
+-- Name: cab_ride cab_ride_distance_check; Type: CHECK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE tp3.cab_ride
+    ADD CONSTRAINT cab_ride_distance_check CHECK ((distance > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2732 (class 2606 OID 16455)
+-- Name: cab_ride cab_ride_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.cab_ride
+    ADD CONSTRAINT cab_ride_pkey PRIMARY KEY (id_ride);
+
+
+--
+-- TOC entry 2714 (class 2606 OID 16477)
+-- Name: car car_check; Type: CHECK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE tp3.car
+    ADD CONSTRAINT car_check CHECK (((year_manuf > 1980) AND (mileage >= 0))) NOT VALID;
+
+
+--
+-- TOC entry 2722 (class 2606 OID 16411)
+-- Name: car car_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.car
+    ADD CONSTRAINT car_pkey PRIMARY KEY (id_car);
+
+
+--
+-- TOC entry 2718 (class 2606 OID 16413)
+-- Name: driver driver_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.driver
+    ADD CONSTRAINT driver_pkey PRIMARY KEY (id_driver);
+
+
+--
+-- TOC entry 2720 (class 2606 OID 16415)
+-- Name: model_list model_list_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.model_list
+    ADD CONSTRAINT model_list_pkey PRIMARY KEY (id_model);
+
+
+--
+-- TOC entry 2726 (class 2606 OID 16440)
+-- Name: passenger passenger_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.passenger
+    ADD CONSTRAINT passenger_pkey PRIMARY KEY (pass_phone);
+
+
+--
+-- TOC entry 2724 (class 2606 OID 16425)
+-- Name: schedule schedule_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.schedule
+    ADD CONSTRAINT schedule_pkey PRIMARY KEY (id_shift);
+
+
+--
+-- TOC entry 2728 (class 2606 OID 16445)
+-- Name: staff staff_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.staff
+    ADD CONSTRAINT staff_pkey PRIMARY KEY (id_operator);
+
+
+--
+-- TOC entry 2715 (class 2606 OID 16478)
+-- Name: tariff tariff_check; Type: CHECK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE tp3.tariff
+    ADD CONSTRAINT tariff_check CHECK (((price > 0) AND (date_tariff_end > date_tariff_start))) NOT VALID;
+
+
+--
+-- TOC entry 2730 (class 2606 OID 16450)
+-- Name: tariff tariff_pkey; Type: CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.tariff
+    ADD CONSTRAINT tariff_pkey PRIMARY KEY (id_tariff);
+
+
+--
+-- TOC entry 2734 (class 2606 OID 16426)
+-- Name: schedule fk_car; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.schedule
+    ADD CONSTRAINT fk_car FOREIGN KEY (id_car) REFERENCES tp3.car(id_car) NOT VALID;
+
+
+--
+-- TOC entry 2738 (class 2606 OID 16466)
+-- Name: cab_ride fk_car; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.cab_ride
+    ADD CONSTRAINT fk_car FOREIGN KEY (id_car) REFERENCES tp3.car(id_car) NOT VALID;
+
+
+--
+-- TOC entry 2735 (class 2606 OID 16431)
+-- Name: schedule fk_driver; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.schedule
+    ADD CONSTRAINT fk_driver FOREIGN KEY (id_driver) REFERENCES tp3.driver(id_driver) NOT VALID;
+
+
+--
+-- TOC entry 2733 (class 2606 OID 16416)
+-- Name: car fk_model; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.car
+    ADD CONSTRAINT fk_model FOREIGN KEY (id_model) REFERENCES tp3.model_list(id_model) NOT VALID;
+
+
+--
+-- TOC entry 2737 (class 2606 OID 16461)
+-- Name: cab_ride fk_operator; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.cab_ride
+    ADD CONSTRAINT fk_operator FOREIGN KEY (id_operator) REFERENCES tp3.staff(id_operator) NOT VALID;
+
+
+--
+-- TOC entry 2739 (class 2606 OID 16471)
+-- Name: cab_ride fk_pass_phone; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.cab_ride
+    ADD CONSTRAINT fk_pass_phone FOREIGN KEY (pass_phone) REFERENCES tp3.passenger(pass_phone) NOT VALID;
+
+
+--
+-- TOC entry 2736 (class 2606 OID 16456)
+-- Name: cab_ride fk_tariff; Type: FK CONSTRAINT; Schema: tp3; Owner: postgres
+--
+
+ALTER TABLE ONLY tp3.cab_ride
+    ADD CONSTRAINT fk_tariff FOREIGN KEY (id_tariff) REFERENCES tp3.tariff(id_tariff) NOT VALID;
+
+
+-- Completed on 2021-06-16 23:39:48
+
+--
+-- PostgreSQL database dump complete
+--
+
