@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Project Management Database</title>
+</head>
+<body>
+	<h2>Enter Project ID to get information</h2>
+	<ul>
+		<form name="display" action="select.php" method="POST">
+		<br>Project ID:</br><br><input type="text" name="id_project"/></br>
+		<br><input type="submit" name="sumbit"/></br>
+		</form>
+	</ul>
+	<h2>Add new project</h2>
+	<ul>
+		<form name="insert" action="insert.php" method="POST">
+			<br>Project name:</br><br><input type="text" name="project_name"/></br>
+			
+			<br>Project status:</br>
+			<br><select size="1" name="project_status">
+    		<option value="Выполнен">Выполнен</option>
+    		<option selected value="Не выполнен">Не выполнен</option>
+    		<option value="В процессе">В процессе</option>
+    		<option value="Приостановлен">Приостановлен</option>
+   			</select></br>
+
+			<br>Start date:</br><br><input type="date" name="start_date"/></br>
+			<br>End date:</br><br><input type="date" name="end_date"/></br>
+			<br>Employee ID(1-11): </br><br><input type="text" name="employee_id"/></br>
+			<br>Organisation ID(1-7): </br><br><input type="text" name="organisation_id"/></br>
+			<br><input type="submit" name="submit"/></br>
+		</form>
+	</ul>
+</body>
+
+<h2>Delete project</h2>
+<ul>
+	<form name="display" action="delete.php" method="POST">
+	<br>Project ID:</br><br><input type="text" name="id_project"/></br>
+	<br><input type="submit" name="submit"/></br>
+</form>
+</ul>
+</html>
