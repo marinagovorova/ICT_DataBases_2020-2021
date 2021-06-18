@@ -1,0 +1,591 @@
+<html>
+<head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+<style media="screen">
+  #machine_table {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div class='div_table'>
+
+<p></p>
+<h2>Заказы</h2>
+<p>Данные о всех заказах в таксопарке</p>
+<table style="width:100%">
+<tr>
+  <th>id</th>
+  <th>Дата</th>
+  <th>Старт</th>
+  <th>Конец</th>
+  <th>Дистанция</th>
+  <th>Откуда</th>
+  <th>Куда</th>
+  <th>id_worker</th>
+  <th>id_car</th>
+  <th>id_passenger</th>
+  <th>id_tariff</th>
+</tr>
+
+{%
+for t_name_table in taxi_calls_tables:
+%}
+<tr>
+  <td>{{ t_name_table[6] }}</td>
+  <td>{{ t_name_table[1] }}</td>
+  <td>{{ t_name_table[2] }}</td>
+  <td>{{ t_name_table[0] }}</td>
+  <td>{{ t_name_table[3] }}</td>
+  <td>{{ t_name_table[4] }}</td>
+  <td>{{ t_name_table[5] }}</td>
+  <td>{{ t_name_table[7] }}</td>
+  <td>{{ t_name_table[8] }}</td>
+  <td>{{ t_name_table[9] }}</td>
+  <td>{{ t_name_table[10] }}</td>
+  <td>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taxicallUpdateModal"  data-taxi-call-id="{{ t_name_table[6] }}">
+      Изменить
+    </button>
+  </td>
+  <td>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taxicallDeleteModal"  data-taxi-call-id="{{ t_name_table[6] }}">
+      Удалить
+    </button>
+  </td>
+</tr>
+{%
+endfor
+%}
+</table>
+
+<p></p>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carAddModal"  data_name="asd">
+  Добавить новую машину
+</button>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#driverAddModal"  data_name="asd">
+  Добавить нового водителя
+</button>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#taxicallAddModal"  data_name="asd">
+  Добавить новый заказ
+</button>
+
+<button type="button" class="btn btn-primary" id="button_text" onclick="asd()"  data_name="asd">
+  Показать таблицу с машинами
+</button>
+
+<p></p>
+
+<div id="machine_table">
+<h2>Машины</h2>
+<p>Данные о всех машинах в таксопарке</p>
+<table style="width:100%">
+  <tr>
+    <th>id</th>
+    <th>Пробег</th>
+    <th>Дата ТО</th>
+    <th>Год</th>
+    <th>Гос номер</th>
+    <th>Номер модели</th>
+  </tr>
+
+  {%
+  for t_name_table in cars_tables:
+  %}
+  <tr>
+    <td>{{ t_name_table[0] }}</td>
+    <td>{{ t_name_table[1] }}</td>
+    <td>{{ t_name_table[2] }}</td>
+    <td>{{ t_name_table[3] }}</td>
+    <td>{{ t_name_table[4] }}</td>
+    <td>{{ t_name_table[5] }}</td>
+    <td>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carUpdateModal"  data-car-id="{{ t_name_table[0] }}">
+        Изменить
+      </button>
+    </td>
+    <td>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carDeleteModal"  data-car-id="{{ t_name_table[0] }}">
+        Удалить
+      </button>
+    </td>
+  </tr>
+  {%
+  endfor
+  %}
+</table>
+</div>
+
+<div class="modal fade" id="carUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Обновить данные о машине</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="update_car" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">id:</label>
+            <input type="text" class="form-control" name = 'id_car' id="car_id">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Пробег:</label>
+            <input class="form-control" name="mileage">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дата последнего ТО:</label>
+            <input type="date" class="form-control" name="ti">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Год выпуска:</label>
+            <input class="form-control" name="year">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Гос номер:</label>
+            <input class="form-control" name="gos">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Модель машины:</label>
+            <select type="text" name="id_model">
+              {%
+              for item in car_models:
+              %}
+                <option value="{{ item[0] }}" > {{ item[1] }} {{item[2]}}</option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="carDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удалить машину</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="delete_car" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">id:</label>
+            <input type="text" class="form-control" name = 'id_car' id="car_id">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Вы уверены, что хотите удалить данные о машине с соответсвующим id?</label>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Удалить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="carAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить новую машину</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="add_car" method="POST">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Пробег:</label>
+            <input class="form-control" name="mileage">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дата последнего ТО:</label>
+            <input type="date" class="form-control" name="ti">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Год выпсука:</label>
+            <input class="form-control" name="year">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Гос номер:</label>
+            <input class="form-control" name="gos">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Модель машины:</label>
+            <select type="text" name="id_model">
+              {%
+              for item in car_models:
+              %}
+                <option value="{{ item[0] }}" > {{ item[1] }} {{item[2]}}</option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="driverAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить нового водителя</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="add_driver" method="POST">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">ФИО:</label>
+            <input class="form-control" name="name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Адрес проживания:</label>
+            <input class="form-control" name="address">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Номер телефона:</label>
+            <input class="form-control" name="number">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Серия и номер паспорта:</label>
+            <input class="form-control" name="passport">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Категория:</label>
+            <select type="text" name="category">
+              {%
+              for item in driver_categories:
+              %}
+                <option value="{{ item }}" > {{ item }} {{item[2]}}</option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="taxicallAddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить новый заказ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="add_taxi_call" method="POST">
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дата:</label>
+            <input type="date" class="form-control" name="date">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Время старта:</label>
+            <input type="time" class="form-control" name="start">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Время окончания:</label>
+            <input type="time" class="form-control" name="end">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дистанция:</label>
+            <input class="form-control" name="distance">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Откуда:</label>
+            <input class="form-control" name="from_">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Куда:</label>
+            <input class="form-control" name="where">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">ФИО сотрудника:</label>
+            <select type="text" name="id_worker">
+              {%
+              for item in workers:
+              %}
+                <option value="{{ item[0] }}" > {{ item[3] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Машина:</label>
+            <select type="text" name="id_car">
+              {%
+              for item in cars:
+              %}
+                <option value="{{ item[0] }}" > {{ item[4] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Номер телефона пассажира:</label>
+            <select type="text" name="id_passenger">
+              {%
+              for item in passengers:
+              %}
+                <option value="{{ item[0] }}" > {{ item[1] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Тариф:</label>
+            <select type="text" name="id_tariff">
+              {%
+              for item in tariffs:
+              %}
+                <option value="{{ item[0] }}" > {{ item[2] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="taxicallUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Обновить данные о заказе</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="update_taxi_call" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">id:</label>
+            <input type="text" class="form-control" name = 'id_taxi_call' id="taxi_call_id">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дата:</label>
+            <input type="date" class="form-control" name="date">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Время старта:</label>
+            <input type="time" class="form-control" name="start">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Время окончания:</label>
+            <input type="time" class="form-control" name="end">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Дистанция:</label>
+            <input class="form-control" name="distance">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Откуда:</label>
+            <input class="form-control" name="from_">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Куда:</label>
+            <input class="form-control" name="where">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">ФИО сотрудника:</label>
+            <select type="text" name="id_worker">
+              {%
+              for item in workers:
+              %}
+                <option value="{{ item[0] }}" > {{ item[3] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Машина:</label>
+            <select type="text" name="id_car">
+              {%
+              for item in cars:
+              %}
+                <option value="{{ item[0] }}" > {{ item[4] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Номер телефона пассажира:</label>
+            <select type="text" name="id_passenger">
+              {%
+              for item in passengers:
+              %}
+                <option value="{{ item[0] }}" > {{ item[1] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Тариф:</label>
+            <select type="text" name="id_tariff">
+              {%
+              for item in tariffs:
+              %}
+                <option value="{{ item[0] }}" > {{ item[2] }} </option>
+              {%
+              endfor
+              %}
+            </select>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="taxicallDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Удалить заказ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="delete_taxi_call" method="POST">
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">id:</label>
+            <input type="text" class="form-control" name = 'id_taxi_call' id="taxi_call_id">
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Вы уверены, что хотите удалить данные о заказе с соответсвующим id?</label>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+            <button type="submit" class="btn btn-primary">Удалить</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+  var carUpdateModal = document.getElementById('carUpdateModal')
+
+  carUpdateModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var car_id = button.getAttribute('data-car-id')
+  var car_id_input = this.querySelector('#car_id')
+
+  car_id_input.value = car_id
+
+  })
+
+  var carDeleteModal = document.getElementById('carDeleteModal')
+  carDeleteModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var car_id = button.getAttribute('data-car-id')
+  var car_id_input = this.querySelector('#car_id')
+
+  car_id_input.value = car_id
+
+  })
+
+
+  var taxicallUpdateModal = document.getElementById('taxicallUpdateModal')
+  taxicallUpdateModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var taxi_call_id = button.getAttribute('data-taxi-call-id')
+  var taxi_call_id_input = this.querySelector('#taxi_call_id')
+
+  taxi_call_id_input.value = taxi_call_id
+
+  })
+
+  var taxicallDeleteModal = document.getElementById('taxicallDeleteModal')
+  taxicallDeleteModal.addEventListener('show.bs.modal', function (event) {
+  var button = event.relatedTarget
+  var taxi_call_id = button.getAttribute('data-taxi-call-id')
+  var taxi_call_id_input = this.querySelector('#taxi_call_id')
+
+  taxi_call_id_input.value = taxi_call_id
+
+  })
+
+  function asd() {
+    var status = document.getElementById('machine_table').style.display;
+    var button_status = document.getElementById('button_text')
+    if (status == 'block') {
+      status = 'none';
+      button_status.innerHTML ='Показать таблицу с машинами';
+    }
+    else {
+      status='block';
+      button_status.innerHTML='Скрыть таблицу с машинами';
+    }
+    document.getElementById('machine_table').style.display = status;
+
+  }
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</body>
+</html>
