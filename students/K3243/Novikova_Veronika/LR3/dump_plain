@@ -5,7 +5,7 @@
 -- Dumped from database version 11.12
 -- Dumped by pg_dump version 11.12
 
--- Started on 2021-06-22 16:18:01
+-- Started on 2021-06-22 22:26:32
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -86,35 +86,6 @@ CREATE TABLE taxi.driver (
 ALTER TABLE taxi.driver OWNER TO postgres;
 
 --
--- TOC entry 200 (class 1259 OID 24606)
--- Name: models; Type: TABLE; Schema: taxi; Owner: postgres
---
-
-CREATE TABLE taxi.models (
-    model_id integer NOT NULL,
-    model_name character(20) NOT NULL,
-    model_brand character(10) NOT NULL,
-    tech_characteristics character(70) NOT NULL
-);
-
-
-ALTER TABLE taxi.models OWNER TO postgres;
-
---
--- TOC entry 203 (class 1259 OID 24633)
--- Name: passenger; Type: TABLE; Schema: taxi; Owner: postgres
---
-
-CREATE TABLE taxi.passenger (
-    passanger_id integer NOT NULL,
-    passanger_name character(70) NOT NULL,
-    passanger_phone character(10) NOT NULL
-);
-
-
-ALTER TABLE taxi.passenger OWNER TO postgres;
-
---
 -- TOC entry 201 (class 1259 OID 24616)
 -- Name: ride; Type: TABLE; Schema: taxi; Owner: postgres
 --
@@ -126,8 +97,8 @@ CREATE TABLE taxi.ride (
     tarif_id integer NOT NULL,
     passanger_id integer NOT NULL,
     call_date date NOT NULL,
-    time_begin time without time zone NOT NULL,
-    time_end time without time zone NOT NULL,
+    time_begin time without time zone,
+    time_end time without time zone,
     from_loc character(70) NOT NULL,
     to_loc character(70) NOT NULL,
     distance integer NOT NULL
@@ -153,6 +124,65 @@ CREATE TABLE taxi.schedule (
 ALTER TABLE taxi.schedule OWNER TO postgres;
 
 --
+-- TOC entry 205 (class 1259 OID 41007)
+-- Name: has_no_pass; Type: VIEW; Schema: taxi; Owner: postgres
+--
+
+CREATE VIEW taxi.has_no_pass AS
+ SELECT ride.car_id,
+    schedule.driver_id
+   FROM taxi.ride,
+    taxi.schedule
+  WHERE ((ride.car_id = schedule.car_id) AND (ride.time_end IS NULL));
+
+
+ALTER TABLE taxi.has_no_pass OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 24606)
+-- Name: models; Type: TABLE; Schema: taxi; Owner: postgres
+--
+
+CREATE TABLE taxi.models (
+    model_id integer NOT NULL,
+    model_name character(20) NOT NULL,
+    model_brand character(10) NOT NULL,
+    tech_characteristics character(70) NOT NULL
+);
+
+
+ALTER TABLE taxi.models OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 41011)
+-- Name: no_pass; Type: VIEW; Schema: taxi; Owner: postgres
+--
+
+CREATE VIEW taxi.no_pass AS
+ SELECT ride.car_id,
+    schedule.driver_id
+   FROM taxi.ride,
+    taxi.schedule
+  WHERE ((ride.car_id = schedule.car_id) AND (ride.from_loc IS NULL));
+
+
+ALTER TABLE taxi.no_pass OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 24633)
+-- Name: passenger; Type: TABLE; Schema: taxi; Owner: postgres
+--
+
+CREATE TABLE taxi.passenger (
+    passanger_id integer NOT NULL,
+    passanger_name character(70) NOT NULL,
+    passanger_phone character(10) NOT NULL
+);
+
+
+ALTER TABLE taxi.passenger OWNER TO postgres;
+
+--
 -- TOC entry 204 (class 1259 OID 24646)
 -- Name: tarif; Type: TABLE; Schema: taxi; Owner: postgres
 --
@@ -167,7 +197,35 @@ CREATE TABLE taxi.tarif (
 ALTER TABLE taxi.tarif OWNER TO postgres;
 
 --
--- TOC entry 2879 (class 0 OID 24626)
+-- TOC entry 207 (class 1259 OID 41015)
+-- Name: salary; Type: VIEW; Schema: taxi; Owner: postgres
+--
+
+CREATE VIEW taxi.salary AS
+ SELECT sum(((0.5 * (ride.distance)::numeric) * (tarif.tarif_price)::numeric)) AS sum
+   FROM taxi.ride,
+    taxi.tarif
+  WHERE ((tarif.tarif_id = ride.tarif_id) AND (ride.call_date = (CURRENT_DATE - 1)));
+
+
+ALTER TABLE taxi.salary OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 41019)
+-- Name: salary_daily; Type: VIEW; Schema: taxi; Owner: postgres
+--
+
+CREATE VIEW taxi.salary_daily AS
+ SELECT sum(((0.5 * (ride.distance)::numeric) * (tarif.tarif_price)::numeric)) AS sum
+   FROM taxi.ride,
+    taxi.tarif
+  WHERE ((tarif.tarif_id = ride.tarif_id) AND (ride.call_date = '2021-06-06'::date));
+
+
+ALTER TABLE taxi.salary_daily OWNER TO postgres;
+
+--
+-- TOC entry 2899 (class 0 OID 24626)
 -- Dependencies: 202
 -- Data for Name: call_worker; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -179,27 +237,26 @@ COPY taxi.call_worker (call_worker_id, call_worker_name, call_worker_adress, cal
 
 
 --
--- TOC entry 2875 (class 0 OID 24582)
+-- TOC entry 2895 (class 0 OID 24582)
 -- Dependencies: 198
 -- Data for Name: car; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
 
 COPY taxi.car (car_id, model_id, model, year_prod, km, date_to, car_num) FROM stdin;
-1	5	Fortuner                      	2015	5000	2021-01-16	k228ek    
 2	2	Rio                           	2017	6054	2021-02-16	t262ed    
-3	1	Solaris                       	2018	4054	2021-01-26	s724jx    
 4	3	Duster                        	2019	5832	2021-03-09	x872nj    
 5	4	Sandero                       	2016	12083	2021-04-18	a624je    
 6	1	Solaris                       	2020	6083	2021-04-04	k835fr    
-7	2	Rio                           	2012	250001	2020-06-09	y543gf    
 8	5	Fortuner                      	2017	11001	2021-02-09	s287sy    
 9	3	Duster                        	2015	76001	2021-04-09	d726dy    
 10	4	Sandero                       	2016	54826	2021-03-24	g872ud    
+1	5	Fortuner                      	2015	5000	2021-06-06	k228ek    
+3	1	Solaris                       	2018	4054	2021-06-06	s724jx    
 \.
 
 
 --
--- TOC entry 2874 (class 0 OID 24577)
+-- TOC entry 2894 (class 0 OID 24577)
 -- Dependencies: 197
 -- Data for Name: driver; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -215,7 +272,7 @@ COPY taxi.driver (driver_id, driver_name, driver_adress, driver_phone, driver_pa
 
 
 --
--- TOC entry 2877 (class 0 OID 24606)
+-- TOC entry 2897 (class 0 OID 24606)
 -- Dependencies: 200
 -- Data for Name: models; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -230,7 +287,7 @@ COPY taxi.models (model_id, model_name, model_brand, tech_characteristics) FROM 
 
 
 --
--- TOC entry 2880 (class 0 OID 24633)
+-- TOC entry 2900 (class 0 OID 24633)
 -- Dependencies: 203
 -- Data for Name: passenger; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -241,11 +298,12 @@ COPY taxi.passenger (passanger_id, passanger_name, passanger_phone) FROM stdin;
 3	Antonova Anita Antonovna                                              	9212568105
 4	Vernov Alexey Vladisavovich                                           	9646295184
 5	Danilova Elizaveta Victorovna                                         	9985269140
+6	Novikova Veronika Victorovna                                          	9126667788
 \.
 
 
 --
--- TOC entry 2878 (class 0 OID 24616)
+-- TOC entry 2898 (class 0 OID 24616)
 -- Dependencies: 201
 -- Data for Name: ride; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -262,11 +320,12 @@ COPY taxi.ride (ride_id, car_id, call_worker_id, tarif_id, passanger_id, call_da
 9	5	2	1	3	2021-06-08	20:40:00	21:00:00	Bolshaya Morskaya 30                                                  	Moskovskiy prospect 100                                               	17
 10	5	2	1	4	2021-06-08	21:10:00	21:00:00	Altayskaya 18                                                         	Nevskiy 66                                                            	20
 11	5	2	1	5	2021-06-08	21:30:00	22:00:00	Ligovskiy 33                                                          	Petrogradskaya 30                                                     	11
+12	5	2	1	6	2021-06-08	01:10:00	\N	Lensoveta 23                                                          	Park pobedy                                                           	5
 \.
 
 
 --
--- TOC entry 2876 (class 0 OID 24591)
+-- TOC entry 2896 (class 0 OID 24591)
 -- Dependencies: 199
 -- Data for Name: schedule; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -277,11 +336,12 @@ COPY taxi.schedule (shift_id, car_id, driver_id, shift_begin, shift_end) FROM st
 3	3	4	2021-06-07 08:05:00	2021-06-07 16:00:00
 4	4	5	2021-06-08 09:00:00	2021-06-08 19:00:00
 5	5	3	2021-06-08 20:00:00	2021-06-09 03:00:00
+6	1	6	2021-06-10 10:00:00	2021-06-10 20:00:00
 \.
 
 
 --
--- TOC entry 2881 (class 0 OID 24646)
+-- TOC entry 2901 (class 0 OID 24646)
 -- Dependencies: 204
 -- Data for Name: tarif; Type: TABLE DATA; Schema: taxi; Owner: postgres
 --
@@ -294,7 +354,7 @@ COPY taxi.tarif (tarif_id, tarif_name, tarif_price) FROM stdin;
 
 
 --
--- TOC entry 2737 (class 2606 OID 24630)
+-- TOC entry 2753 (class 2606 OID 24630)
 -- Name: call_worker call_worker_pkey; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -303,7 +363,7 @@ ALTER TABLE ONLY taxi.call_worker
 
 
 --
--- TOC entry 2721 (class 2606 OID 24586)
+-- TOC entry 2737 (class 2606 OID 24586)
 -- Name: car car_id; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -312,7 +372,7 @@ ALTER TABLE ONLY taxi.car
 
 
 --
--- TOC entry 2713 (class 2606 OID 40995)
+-- TOC entry 2729 (class 2606 OID 40995)
 -- Name: schedule check_data_sch; Type: CHECK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -321,7 +381,7 @@ ALTER TABLE taxi.schedule
 
 
 --
--- TOC entry 2714 (class 2606 OID 40968)
+-- TOC entry 2730 (class 2606 OID 40968)
 -- Name: ride distance_not_zero; Type: CHECK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -330,7 +390,7 @@ ALTER TABLE taxi.ride
 
 
 --
--- TOC entry 2717 (class 2606 OID 24581)
+-- TOC entry 2733 (class 2606 OID 24581)
 -- Name: driver driver_id; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -339,7 +399,7 @@ ALTER TABLE ONLY taxi.driver
 
 
 --
--- TOC entry 2712 (class 2606 OID 41001)
+-- TOC entry 2728 (class 2606 OID 41001)
 -- Name: car km_not_zero; Type: CHECK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -348,7 +408,7 @@ ALTER TABLE taxi.car
 
 
 --
--- TOC entry 2729 (class 2606 OID 24610)
+-- TOC entry 2745 (class 2606 OID 24610)
 -- Name: models models_pkey; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -357,7 +417,7 @@ ALTER TABLE ONLY taxi.models
 
 
 --
--- TOC entry 2741 (class 2606 OID 24637)
+-- TOC entry 2757 (class 2606 OID 24637)
 -- Name: passenger passenger_pkey; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -366,7 +426,7 @@ ALTER TABLE ONLY taxi.passenger
 
 
 --
--- TOC entry 2715 (class 2606 OID 40969)
+-- TOC entry 2731 (class 2606 OID 40969)
 -- Name: tarif price_not_zero; Type: CHECK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -375,7 +435,7 @@ ALTER TABLE taxi.tarif
 
 
 --
--- TOC entry 2733 (class 2606 OID 24620)
+-- TOC entry 2749 (class 2606 OID 24620)
 -- Name: ride ride_pkey; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -384,7 +444,7 @@ ALTER TABLE ONLY taxi.ride
 
 
 --
--- TOC entry 2725 (class 2606 OID 24595)
+-- TOC entry 2741 (class 2606 OID 24595)
 -- Name: schedule schedule_pkey; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -393,7 +453,7 @@ ALTER TABLE ONLY taxi.schedule
 
 
 --
--- TOC entry 2719 (class 2606 OID 24588)
+-- TOC entry 2735 (class 2606 OID 24588)
 -- Name: driver unique_cols; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -402,7 +462,7 @@ ALTER TABLE ONLY taxi.driver
 
 
 --
--- TOC entry 2739 (class 2606 OID 24641)
+-- TOC entry 2755 (class 2606 OID 24641)
 -- Name: call_worker unique_cols_call_work; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -411,7 +471,7 @@ ALTER TABLE ONLY taxi.call_worker
 
 
 --
--- TOC entry 2723 (class 2606 OID 40971)
+-- TOC entry 2739 (class 2606 OID 40971)
 -- Name: car unique_cols_cars; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -420,7 +480,7 @@ ALTER TABLE ONLY taxi.car
 
 
 --
--- TOC entry 2731 (class 2606 OID 24643)
+-- TOC entry 2747 (class 2606 OID 24643)
 -- Name: models unique_models; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -429,7 +489,7 @@ ALTER TABLE ONLY taxi.models
 
 
 --
--- TOC entry 2743 (class 2606 OID 24639)
+-- TOC entry 2759 (class 2606 OID 24639)
 -- Name: passenger unique_passangers; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -438,7 +498,7 @@ ALTER TABLE ONLY taxi.passenger
 
 
 --
--- TOC entry 2735 (class 2606 OID 24652)
+-- TOC entry 2751 (class 2606 OID 24652)
 -- Name: ride unique_rides; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -447,7 +507,7 @@ ALTER TABLE ONLY taxi.ride
 
 
 --
--- TOC entry 2727 (class 2606 OID 24645)
+-- TOC entry 2743 (class 2606 OID 24645)
 -- Name: schedule unique_shifts; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -456,7 +516,7 @@ ALTER TABLE ONLY taxi.schedule
 
 
 --
--- TOC entry 2745 (class 2606 OID 24650)
+-- TOC entry 2761 (class 2606 OID 24650)
 -- Name: tarif unique_tarifs; Type: CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -465,7 +525,7 @@ ALTER TABLE ONLY taxi.tarif
 
 
 --
--- TOC entry 2750 (class 2606 OID 24653)
+-- TOC entry 2766 (class 2606 OID 24653)
 -- Name: ride call_worker; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -474,7 +534,7 @@ ALTER TABLE ONLY taxi.ride
 
 
 --
--- TOC entry 2747 (class 2606 OID 24596)
+-- TOC entry 2763 (class 2606 OID 24596)
 -- Name: schedule cars; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -483,7 +543,7 @@ ALTER TABLE ONLY taxi.schedule
 
 
 --
--- TOC entry 2749 (class 2606 OID 24621)
+-- TOC entry 2765 (class 2606 OID 24621)
 -- Name: ride cars; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -492,7 +552,7 @@ ALTER TABLE ONLY taxi.ride
 
 
 --
--- TOC entry 2748 (class 2606 OID 24601)
+-- TOC entry 2764 (class 2606 OID 24601)
 -- Name: schedule drivers; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -501,7 +561,7 @@ ALTER TABLE ONLY taxi.schedule
 
 
 --
--- TOC entry 2746 (class 2606 OID 24611)
+-- TOC entry 2762 (class 2606 OID 24611)
 -- Name: car model; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -510,7 +570,7 @@ ALTER TABLE ONLY taxi.car
 
 
 --
--- TOC entry 2752 (class 2606 OID 24663)
+-- TOC entry 2768 (class 2606 OID 24663)
 -- Name: ride passenger; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -519,7 +579,7 @@ ALTER TABLE ONLY taxi.ride
 
 
 --
--- TOC entry 2751 (class 2606 OID 24658)
+-- TOC entry 2767 (class 2606 OID 24658)
 -- Name: ride tarifs; Type: FK CONSTRAINT; Schema: taxi; Owner: postgres
 --
 
@@ -527,7 +587,7 @@ ALTER TABLE ONLY taxi.ride
     ADD CONSTRAINT tarifs FOREIGN KEY (tarif_id) REFERENCES taxi.tarif(tarif_id) ON UPDATE RESTRICT ON DELETE RESTRICT NOT VALID;
 
 
--- Completed on 2021-06-22 16:18:02
+-- Completed on 2021-06-22 22:26:32
 
 --
 -- PostgreSQL database dump complete
