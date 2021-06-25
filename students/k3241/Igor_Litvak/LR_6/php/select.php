@@ -16,7 +16,7 @@ $result = pg_query($db, $query);
 $rows = pg_num_rows($result);
 $fields = pg_num_fields($result);
 
-$html = "<p>Result:</p>";
+$html = "<p>Result</p>";
 $html .= "<table border='1'>";
 $html .= "<tr><td>Number</td><td>Name</td><td>City</td><td>Street</td><td>Balance</td></tr>";
 for ($i = 0; $i < $rows; $i++) {

@@ -22,6 +22,3 @@ if (isset($_POST["number"]) && isset($_POST["name"]) && isset($_POST["city"]) &&
 } else {
     echo("Error");
 }
-
-
-
