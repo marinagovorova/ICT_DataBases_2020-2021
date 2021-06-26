@@ -1,0 +1,508 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.3
+-- Dumped by pg_dump version 13.3
+
+-- Started on 2021-06-24 21:11:37
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 5 (class 2615 OID 32931)
+-- Name: default_schema; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA default_schema;
+
+
+ALTER SCHEMA default_schema OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 207 (class 1259 OID 32969)
+-- Name: departments; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.departments (
+    department_id integer NOT NULL,
+    department_name text NOT NULL,
+    department_phone text
+);
+
+
+ALTER TABLE default_schema.departments OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 32967)
+-- Name: departments_department_id_seq; Type: SEQUENCE; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.departments ALTER COLUMN department_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME default_schema.departments_department_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 205 (class 1259 OID 32954)
+-- Name: employees; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.employees (
+    employee_id integer NOT NULL,
+    project_id integer,
+    department_id integer NOT NULL,
+    employee_name text NOT NULL,
+    employee_position text,
+    employee_salary money NOT NULL
+);
+
+
+ALTER TABLE default_schema.employees OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 32952)
+-- Name: employees_employee_id_seq; Type: SEQUENCE; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.employees ALTER COLUMN employee_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME default_schema.employees_employee_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 201 (class 1259 OID 32934)
+-- Name: organization; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.organization (
+    id_organization integer NOT NULL,
+    name_organization text NOT NULL,
+    adress_organization text NOT NULL
+);
+
+
+ALTER TABLE default_schema.organization OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 32932)
+-- Name: organization_id_organization_seq; Type: SEQUENCE; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.organization ALTER COLUMN id_organization ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME default_schema.organization_id_organization_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 203 (class 1259 OID 32944)
+-- Name: projects; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.projects (
+    project_id integer NOT NULL,
+    organization_id integer NOT NULL,
+    supervisor_id integer,
+    project_name text NOT NULL,
+    project_deadline date,
+    project_data_start date
+);
+
+
+ALTER TABLE default_schema.projects OWNER TO postgres;
+
+--
+-- TOC entry 202 (class 1259 OID 32942)
+-- Name: projects_project_id_seq; Type: SEQUENCE; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.projects ALTER COLUMN project_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME default_schema.projects_project_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 210 (class 1259 OID 32997)
+-- Name: task_info; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.task_info (
+    task_id integer NOT NULL,
+    task_date_start date NOT NULL,
+    task_date_check date,
+    task_reason_unfinished text,
+    task_done boolean NOT NULL,
+    task_deadline date NOT NULL,
+    CONSTRAINT date_check CHECK (((task_date_check >= task_date_start) AND (task_date_check <= task_deadline))),
+    CONSTRAINT date_start CHECK (((task_date_start <= task_date_check) AND (task_date_start < task_deadline)))
+);
+
+
+ALTER TABLE default_schema.task_info OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 32979)
+-- Name: tasks; Type: TABLE; Schema: default_schema; Owner: postgres
+--
+
+CREATE TABLE default_schema.tasks (
+    task_id integer NOT NULL,
+    project_id integer NOT NULL,
+    task_name text NOT NULL,
+    employee_id integer
+);
+
+
+ALTER TABLE default_schema.tasks OWNER TO postgres;
+
+--
+-- TOC entry 208 (class 1259 OID 32977)
+-- Name: tasks_task_id_seq; Type: SEQUENCE; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.tasks ALTER COLUMN task_id ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME default_schema.tasks_task_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 3047 (class 0 OID 32969)
+-- Dependencies: 207
+-- Data for Name: departments; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.departments (department_id, department_name, department_phone) FROM stdin;
+1	ИКТ	+78655455567
+2	Отдел закупок	+78499894478
+3	Кухня	+79875677577
+4	Отдел обслуживания кафе	+78959543245
+\.
+
+
+--
+-- TOC entry 3045 (class 0 OID 32954)
+-- Dependencies: 205
+-- Data for Name: employees; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.employees (employee_id, project_id, department_id, employee_name, employee_position, employee_salary) FROM stdin;
+1	3	1	Хлопотов Максим Владимирович	Руководитель	550,00 ?
+2	3	1	Лайок Олег Владимирович	Студент	2,00 ?
+3	4	3	Пирогов Андрей Михайлович	Руководитель	50 000,00 ?
+4	5	2	Сидоров Иван Грегорьивич	Руководитель	30 000,00 ?
+5	6	4	Иванов Александр Петрович	Руководитель	40 000,00 ?
+6	4	3	Найденов Александр Михайлович	Повар	20 000,00 ?
+7	4	3	Иванов Иван Иванович	Повар	20 000,00 ?
+8	5	2	Сидоров Петр Алексеевич	Рабочий	15 000,00 ?
+9	5	2	Новиков Григорий Петрович	Рабочий	17 000,00 ?
+10	5	2	Александров Матвей Борисович	Рабочий	12 000,00 ?
+11	6	4	Анатольев Виталий Сергеевич	Менеджер	35 000,00 ?
+12	6	4	Никитин Виктор Олегович	Рабочий	21 000,00 ?
+13	6	4	Гречихо Александр Александрович	Рабочий	21 000,00 ?
+14	6	4	Андреев Борис Иванович	Рабочий	22 000,00 ?
+\.
+
+
+--
+-- TOC entry 3041 (class 0 OID 32934)
+-- Dependencies: 201
+-- Data for Name: organization; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.organization (id_organization, name_organization, adress_organization) FROM stdin;
+1	ИТМО	Ломоносова, 9
+2	ИП Тортов	Пушкина, 10
+3	ОАО Компьютерные технологии	Некрасова, 12
+\.
+
+
+--
+-- TOC entry 3043 (class 0 OID 32944)
+-- Dependencies: 203
+-- Data for Name: projects; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.projects (project_id, organization_id, supervisor_id, project_name, project_deadline, project_data_start) FROM stdin;
+3	1	1	Экзамен	2021-03-26	\N
+4	2	3	Приготовить медовик	2021-06-26	2021-06-24
+5	2	4	Купить ингредиенты	2021-06-25	2021-06-20
+6	2	5	Подготовить помещение	2021-07-01	2021-04-19
+7	2	\N	Подготовить отчетность	\N	\N
+\.
+
+
+--
+-- TOC entry 3050 (class 0 OID 32997)
+-- Dependencies: 210
+-- Data for Name: task_info; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.task_info (task_id, task_date_start, task_date_check, task_reason_unfinished, task_done, task_deadline) FROM stdin;
+1	2021-06-20	\N	\N	f	2021-06-25
+2	2021-06-19	\N	\N	f	2021-06-26
+3	2021-06-24	2021-06-24	\N	t	2021-06-26
+4	2021-06-24	2021-06-25	Нет сахара	f	2021-06-26
+5	2021-06-21	2021-06-22	\N	t	2021-06-22
+6	2021-06-22	2021-06-23	\N	t	2021-06-23
+7	2021-06-20	\N	\N	f	2021-06-24
+8	2021-05-01	2021-05-24	\N	t	2021-05-25
+9	2021-04-30	2021-05-13	\N	t	2021-06-05
+10	2021-06-20	2021-06-21	Мастер не пришел	f	2021-06-30
+11	2021-06-26	\N	\N	f	2021-07-01
+\.
+
+
+--
+-- TOC entry 3049 (class 0 OID 32979)
+-- Dependencies: 209
+-- Data for Name: tasks; Type: TABLE DATA; Schema: default_schema; Owner: postgres
+--
+
+COPY default_schema.tasks (task_id, project_id, task_name, employee_id) FROM stdin;
+1	3	Сдать лабу	2
+2	3	Прийти на консультацию	2
+3	4	Приготовить крем	6
+4	4	Приготовить коржи	7
+5	5	Купить яйца	8
+6	5	Купить молочные продукты	9
+7	5	Купить сахар	\N
+8	6	Поставить мебель	11
+9	6	Настроить кухонную технику	12
+10	6	Поставить отопление	13
+11	6	Установить кондиционер	14
+\.
+
+
+--
+-- TOC entry 3056 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: departments_department_id_seq; Type: SEQUENCE SET; Schema: default_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('default_schema.departments_department_id_seq', 4, true);
+
+
+--
+-- TOC entry 3057 (class 0 OID 0)
+-- Dependencies: 204
+-- Name: employees_employee_id_seq; Type: SEQUENCE SET; Schema: default_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('default_schema.employees_employee_id_seq', 14, true);
+
+
+--
+-- TOC entry 3058 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: organization_id_organization_seq; Type: SEQUENCE SET; Schema: default_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('default_schema.organization_id_organization_seq', 3, true);
+
+
+--
+-- TOC entry 3059 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: projects_project_id_seq; Type: SEQUENCE SET; Schema: default_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('default_schema.projects_project_id_seq', 7, true);
+
+
+--
+-- TOC entry 3060 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: tasks_task_id_seq; Type: SEQUENCE SET; Schema: default_schema; Owner: postgres
+--
+
+SELECT pg_catalog.setval('default_schema.tasks_task_id_seq', 11, true);
+
+
+--
+-- TOC entry 2896 (class 2606 OID 32976)
+-- Name: departments departments_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.departments
+    ADD CONSTRAINT departments_pkey PRIMARY KEY (department_id);
+
+
+--
+-- TOC entry 2894 (class 2606 OID 32961)
+-- Name: employees employees_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.employees
+    ADD CONSTRAINT employees_pkey PRIMARY KEY (employee_id);
+
+
+--
+-- TOC entry 2888 (class 2606 OID 32938)
+-- Name: organization organization_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.organization
+    ADD CONSTRAINT organization_pkey PRIMARY KEY (id_organization);
+
+
+--
+-- TOC entry 2890 (class 2606 OID 33069)
+-- Name: projects project_name_unique; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.projects
+    ADD CONSTRAINT project_name_unique UNIQUE (project_name);
+
+
+--
+-- TOC entry 2892 (class 2606 OID 32951)
+-- Name: projects projects_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.projects
+    ADD CONSTRAINT projects_pkey PRIMARY KEY (project_id);
+
+
+--
+-- TOC entry 2886 (class 2606 OID 33174)
+-- Name: task_info task_deadline; Type: CHECK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE default_schema.task_info
+    ADD CONSTRAINT task_deadline CHECK (((task_deadline >= task_date_check) AND (task_deadline >= task_date_start))) NOT VALID;
+
+
+--
+-- TOC entry 2902 (class 2606 OID 33004)
+-- Name: task_info task_info_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.task_info
+    ADD CONSTRAINT task_info_pkey PRIMARY KEY (task_date_start, task_id);
+
+
+--
+-- TOC entry 2898 (class 2606 OID 33071)
+-- Name: tasks task_name; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.tasks
+    ADD CONSTRAINT task_name UNIQUE (task_name);
+
+
+--
+-- TOC entry 2900 (class 2606 OID 32986)
+-- Name: tasks tasks_pkey; Type: CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.tasks
+    ADD CONSTRAINT tasks_pkey PRIMARY KEY (task_id);
+
+
+--
+-- TOC entry 2906 (class 2606 OID 33060)
+-- Name: employees department_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.employees
+    ADD CONSTRAINT department_id FOREIGN KEY (department_id) REFERENCES default_schema.departments(department_id) NOT VALID;
+
+
+--
+-- TOC entry 2907 (class 2606 OID 32987)
+-- Name: tasks employee_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.tasks
+    ADD CONSTRAINT employee_id FOREIGN KEY (employee_id) REFERENCES default_schema.employees(employee_id);
+
+
+--
+-- TOC entry 2903 (class 2606 OID 33050)
+-- Name: projects organization_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.projects
+    ADD CONSTRAINT organization_id FOREIGN KEY (organization_id) REFERENCES default_schema.organization(id_organization) NOT VALID;
+
+
+--
+-- TOC entry 2905 (class 2606 OID 32962)
+-- Name: employees project_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.employees
+    ADD CONSTRAINT project_id FOREIGN KEY (project_id) REFERENCES default_schema.projects(project_id);
+
+
+--
+-- TOC entry 2908 (class 2606 OID 32992)
+-- Name: tasks project_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.tasks
+    ADD CONSTRAINT project_id FOREIGN KEY (project_id) REFERENCES default_schema.projects(project_id);
+
+
+--
+-- TOC entry 2904 (class 2606 OID 33055)
+-- Name: projects supervisor_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.projects
+    ADD CONSTRAINT supervisor_id FOREIGN KEY (supervisor_id) REFERENCES default_schema.employees(employee_id) NOT VALID;
+
+
+--
+-- TOC entry 2909 (class 2606 OID 33005)
+-- Name: task_info task_id; Type: FK CONSTRAINT; Schema: default_schema; Owner: postgres
+--
+
+ALTER TABLE ONLY default_schema.task_info
+    ADD CONSTRAINT task_id FOREIGN KEY (task_id) REFERENCES default_schema.tasks(task_id);
+
+
+-- Completed on 2021-06-24 21:11:38
+
+--
+-- PostgreSQL database dump complete
+--
+
