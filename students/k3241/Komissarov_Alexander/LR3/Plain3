@@ -1,0 +1,528 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.18
+-- Dumped by pg_dump version 10.18
+
+-- Started on 2021-10-04 04:02:54
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'WIN1251';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE "Cars";
+--
+-- TOC entry 2856 (class 1262 OID 16393)
+-- Name: Cars; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "Cars" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'Russian_Russia.1251' LC_CTYPE = 'Russian_Russia.1251';
+
+
+ALTER DATABASE "Cars" OWNER TO postgres;
+
+\connect "Cars"
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'WIN1251';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 2857 (class 0 OID 0)
+-- Dependencies: 2856
+-- Name: DATABASE "Cars"; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE "Cars" IS 'Автомастерская';
+
+
+--
+-- TOC entry 4 (class 2615 OID 16394)
+-- Name: CarStation; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA "CarStation";
+
+
+ALTER SCHEMA "CarStation" OWNER TO postgres;
+
+--
+-- TOC entry 2858 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA "CarStation"; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA "CarStation" IS 'Автомастерская';
+
+
+--
+-- TOC entry 1 (class 3079 OID 12924)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2861 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 197 (class 1259 OID 16403)
+-- Name: Cars; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Cars" (
+    "Serial" text NOT NULL,
+    "Model" text NOT NULL,
+    "Year" integer NOT NULL,
+    "Phone" bigint NOT NULL,
+    "Color" text NOT NULL
+);
+
+
+ALTER TABLE "CarStation"."Cars" OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16435)
+-- Name: Mechanics; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Mechanics" (
+    "Mechanic_id" integer NOT NULL,
+    "Name" text NOT NULL
+);
+
+
+ALTER TABLE "CarStation"."Mechanics" OWNER TO postgres;
+
+--
+-- TOC entry 2862 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: TABLE "Mechanics"; Type: COMMENT; Schema: CarStation; Owner: postgres
+--
+
+COMMENT ON TABLE "CarStation"."Mechanics" IS 'Работающие механики';
+
+
+--
+-- TOC entry 199 (class 1259 OID 16419)
+-- Name: Orders; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Orders" (
+    "Number" integer NOT NULL,
+    "Serial" text NOT NULL,
+    "Income_date" date NOT NULL,
+    "Predicted_date" date,
+    "Real_date" date,
+    "Mechanic_id" integer,
+    "Service_name" text,
+    "Part_name" text
+);
+
+
+ALTER TABLE "CarStation"."Orders" OWNER TO postgres;
+
+--
+-- TOC entry 2863 (class 0 OID 0)
+-- Dependencies: 199
+-- Name: TABLE "Orders"; Type: COMMENT; Schema: CarStation; Owner: postgres
+--
+
+COMMENT ON TABLE "CarStation"."Orders" IS 'Заказы на ремонт';
+
+
+--
+-- TOC entry 198 (class 1259 OID 16411)
+-- Name: Owners; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Owners" (
+    "Phone" bigint NOT NULL,
+    "Name" text NOT NULL
+);
+
+
+ALTER TABLE "CarStation"."Owners" OWNER TO postgres;
+
+--
+-- TOC entry 2864 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: TABLE "Owners"; Type: COMMENT; Schema: CarStation; Owner: postgres
+--
+
+COMMENT ON TABLE "CarStation"."Owners" IS 'Владельцы';
+
+
+--
+-- TOC entry 202 (class 1259 OID 16443)
+-- Name: Parts; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Parts" (
+    "Part_name" text NOT NULL,
+    "Price" integer NOT NULL
+);
+
+
+ALTER TABLE "CarStation"."Parts" OWNER TO postgres;
+
+--
+-- TOC entry 2865 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: TABLE "Parts"; Type: COMMENT; Schema: CarStation; Owner: postgres
+--
+
+COMMENT ON TABLE "CarStation"."Parts" IS 'Запчасти';
+
+
+--
+-- TOC entry 200 (class 1259 OID 16427)
+-- Name: Services; Type: TABLE; Schema: CarStation; Owner: postgres
+--
+
+CREATE TABLE "CarStation"."Services" (
+    "Service_name" text NOT NULL,
+    "Price" integer
+);
+
+
+ALTER TABLE "CarStation"."Services" OWNER TO postgres;
+
+--
+-- TOC entry 2866 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: TABLE "Services"; Type: COMMENT; Schema: CarStation; Owner: postgres
+--
+
+COMMENT ON TABLE "CarStation"."Services" IS 'Предоставляемые услуги';
+
+
+--
+-- TOC entry 2845 (class 0 OID 16403)
+-- Dependencies: 197
+-- Data for Name: Cars; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('1HD1FF4117Y601288', 'Toyota', 1995, 89215434343, 'Blue');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('JF2SJACC2EG564203', 'Ford', 2012, 89825553535, 'Black');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('JH4CL96898C099500', 'Subaru', 2001, 89823333333, 'White');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('1GCGG25U061131370', 'Toyota', 2007, 89824445566, 'Red');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('JTHBK1GGXE2144614', 'Lada', 1990, 89824445566, 'Yellow');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('1B7HF13Z91J514927', 'Mitsubishi', 2010, 89823332211, 'Black');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('YV1MC67218J036900', 'Ford', 2015, 89823332211, 'Green');
+INSERT INTO "CarStation"."Cars" ("Serial", "Model", "Year", "Phone", "Color") VALUES ('1G1YY26E475106760', 'Toyota', 2008, 89825553535, 'Red');
+
+
+--
+-- TOC entry 2849 (class 0 OID 16435)
+-- Dependencies: 201
+-- Data for Name: Mechanics; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Mechanics" ("Mechanic_id", "Name") VALUES (1, 'Сергеев Даниил Евгеньевич');
+INSERT INTO "CarStation"."Mechanics" ("Mechanic_id", "Name") VALUES (2, 'Дионесов Егор Андреевич');
+INSERT INTO "CarStation"."Mechanics" ("Mechanic_id", "Name") VALUES (3, 'Тукбаев Алексей Сергеевич');
+
+
+--
+-- TOC entry 2847 (class 0 OID 16419)
+-- Dependencies: 199
+-- Data for Name: Orders; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (1, '1HD1FF4117Y601288', '2021-09-01', '2021-09-03', '2021-09-03', 2, 'Полировка кузова', 'Средство против царапин');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (2, 'JF2SJACC2EG564203', '2021-09-02', '2021-09-05', '2021-09-04', 1, 'Замена масла', 'Масло моторное');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (3, 'JH4CL96898C099500', '2021-09-07', '2021-09-08', '2021-09-10', 3, 'Замена зеркала', 'Зеркало заднего вида');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (4, '1GCGG25U061131370', '2021-09-12', '2021-09-14', '2021-09-14', 1, 'Замена колеса', 'Колесо');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (5, 'JTHBK1GGXE2144614', '2021-09-15', '2021-09-16', '2021-09-17', 1, 'Осмотр двигателя', 'Комплект прокладок');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (6, '1B7HF13Z91J514927', '2021-09-17', '2021-09-19', '2021-09-19', 2, 'Замена двери', 'Дверь');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (7, 'YV1MC67218J036900', '2021-09-20', '2021-09-21', '2021-09-21', 3, 'Замена колеса', 'Колесо');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (8, '1G1YY26E475106760', '2021-09-22', '2021-09-24', '2021-09-23', 1, 'Замена масла', 'Масло моторное');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (9, 'JTHBK1GGXE2144614', '2021-09-25', '2021-09-26', '2021-09-26', 1, 'Полировка кузова', 'Средство против царапин');
+INSERT INTO "CarStation"."Orders" ("Number", "Serial", "Income_date", "Predicted_date", "Real_date", "Mechanic_id", "Service_name", "Part_name") VALUES (10, '1HD1FF4117Y601288', '2021-09-29', '2021-09-30', '2021-09-30', 2, 'Замена масла', 'Масло моторное');
+
+
+--
+-- TOC entry 2846 (class 0 OID 16411)
+-- Dependencies: 198
+-- Data for Name: Owners; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Owners" ("Phone", "Name") VALUES (89215434343, 'Зубенко Михаил Петрович');
+INSERT INTO "CarStation"."Owners" ("Phone", "Name") VALUES (89825553535, 'Иванов Петр Семёнович');
+INSERT INTO "CarStation"."Owners" ("Phone", "Name") VALUES (89823333333, 'Михайлов Михаил Михайлович');
+INSERT INTO "CarStation"."Owners" ("Phone", "Name") VALUES (89824445566, 'Семёнов Семён Семёнович');
+INSERT INTO "CarStation"."Owners" ("Phone", "Name") VALUES (89823332211, 'Алексеев Алексей Алексеевич');
+
+
+--
+-- TOC entry 2850 (class 0 OID 16443)
+-- Dependencies: 202
+-- Data for Name: Parts; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Средство против царапин', 400);
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Колесо', 5000);
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Зеркало заднего вида', 1500);
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Дверь', 10000);
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Комплект прокладок', 700);
+INSERT INTO "CarStation"."Parts" ("Part_name", "Price") VALUES ('Масло моторное', 2500);
+
+
+--
+-- TOC entry 2848 (class 0 OID 16427)
+-- Dependencies: 200
+-- Data for Name: Services; Type: TABLE DATA; Schema: CarStation; Owner: postgres
+--
+
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Полировка кузова', 1500);
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Замена колеса', 1000);
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Замена зеркала', 500);
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Замена двери', 3000);
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Осмотр двигателя', 1000);
+INSERT INTO "CarStation"."Services" ("Service_name", "Price") VALUES ('Замена масла', 1500);
+
+
+--
+-- TOC entry 2703 (class 2606 OID 16410)
+-- Name: Cars Cars_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Cars"
+    ADD CONSTRAINT "Cars_pkey" PRIMARY KEY ("Serial");
+
+
+--
+-- TOC entry 2698 (class 2606 OID 16455)
+-- Name: Orders Dates_collision; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Orders"
+    ADD CONSTRAINT "Dates_collision" CHECK (("Income_date" <= "Real_date")) NOT VALID;
+
+
+--
+-- TOC entry 2716 (class 2606 OID 16442)
+-- Name: Mechanics Mechanics_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Mechanics"
+    ADD CONSTRAINT "Mechanics_pkey" PRIMARY KEY ("Mechanic_id");
+
+
+--
+-- TOC entry 2699 (class 2606 OID 16454)
+-- Name: Orders Number_positive; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Orders"
+    ADD CONSTRAINT "Number_positive" CHECK (("Number" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2708 (class 2606 OID 16426)
+-- Name: Orders Orders_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Orders"
+    ADD CONSTRAINT "Orders_pkey" PRIMARY KEY ("Number");
+
+
+--
+-- TOC entry 2706 (class 2606 OID 16503)
+-- Name: Owners Owners_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Owners"
+    ADD CONSTRAINT "Owners_pkey" PRIMARY KEY ("Phone");
+
+
+--
+-- TOC entry 2718 (class 2606 OID 16450)
+-- Name: Parts Parts_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Parts"
+    ADD CONSTRAINT "Parts_pkey" PRIMARY KEY ("Part_name");
+
+
+--
+-- TOC entry 2696 (class 2606 OID 16504)
+-- Name: Owners Phone_check; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Owners"
+    ADD CONSTRAINT "Phone_check" CHECK (("Phone" > '80000000000'::bigint)) NOT VALID;
+
+
+--
+-- TOC entry 2697 (class 2606 OID 16505)
+-- Name: Owners Phone_under; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Owners"
+    ADD CONSTRAINT "Phone_under" CHECK (("Phone" < '90000000000'::bigint)) NOT VALID;
+
+
+--
+-- TOC entry 2700 (class 2606 OID 16456)
+-- Name: Services Price_real; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Services"
+    ADD CONSTRAINT "Price_real" CHECK (("Price" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2701 (class 2606 OID 16457)
+-- Name: Parts Price_real; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Parts"
+    ADD CONSTRAINT "Price_real" CHECK (("Price" > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2714 (class 2606 OID 16434)
+-- Name: Services Services_pkey; Type: CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Services"
+    ADD CONSTRAINT "Services_pkey" PRIMARY KEY ("Service_name");
+
+
+--
+-- TOC entry 2695 (class 2606 OID 16453)
+-- Name: Cars Year_real; Type: CHECK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE "CarStation"."Cars"
+    ADD CONSTRAINT "Year_real" CHECK ((("Year" > 1900) AND ("Year" < 2100))) NOT VALID;
+
+
+--
+-- TOC entry 2709 (class 1259 OID 16475)
+-- Name: fki_Mechanic_id; Type: INDEX; Schema: CarStation; Owner: postgres
+--
+
+CREATE INDEX "fki_Mechanic_id" ON "CarStation"."Orders" USING btree ("Mechanic_id");
+
+
+--
+-- TOC entry 2710 (class 1259 OID 16487)
+-- Name: fki_Part_name; Type: INDEX; Schema: CarStation; Owner: postgres
+--
+
+CREATE INDEX "fki_Part_name" ON "CarStation"."Orders" USING btree ("Part_name");
+
+
+--
+-- TOC entry 2704 (class 1259 OID 16488)
+-- Name: fki_Phone; Type: INDEX; Schema: CarStation; Owner: postgres
+--
+
+CREATE INDEX "fki_Phone" ON "CarStation"."Cars" USING btree ("Phone");
+
+
+--
+-- TOC entry 2711 (class 1259 OID 16469)
+-- Name: fki_Serial; Type: INDEX; Schema: CarStation; Owner: postgres
+--
+
+CREATE INDEX "fki_Serial" ON "CarStation"."Orders" USING btree ("Serial");
+
+
+--
+-- TOC entry 2712 (class 1259 OID 16481)
+-- Name: fki_Service_id; Type: INDEX; Schema: CarStation; Owner: postgres
+--
+
+CREATE INDEX "fki_Service_id" ON "CarStation"."Orders" USING btree ("Service_name");
+
+
+--
+-- TOC entry 2721 (class 2606 OID 16470)
+-- Name: Orders Mechanic_id; Type: FK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Orders"
+    ADD CONSTRAINT "Mechanic_id" FOREIGN KEY ("Mechanic_id") REFERENCES "CarStation"."Mechanics"("Mechanic_id") NOT VALID;
+
+
+--
+-- TOC entry 2723 (class 2606 OID 16482)
+-- Name: Orders Part_name; Type: FK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Orders"
+    ADD CONSTRAINT "Part_name" FOREIGN KEY ("Part_name") REFERENCES "CarStation"."Parts"("Part_name") NOT VALID;
+
+
+--
+-- TOC entry 2719 (class 2606 OID 16506)
+-- Name: Cars Phone; Type: FK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Cars"
+    ADD CONSTRAINT "Phone" FOREIGN KEY ("Phone") REFERENCES "CarStation"."Owners"("Phone") NOT VALID;
+
+
+--
+-- TOC entry 2720 (class 2606 OID 16464)
+-- Name: Orders Serial; Type: FK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Orders"
+    ADD CONSTRAINT "Serial" FOREIGN KEY ("Serial") REFERENCES "CarStation"."Cars"("Serial") NOT VALID;
+
+
+--
+-- TOC entry 2722 (class 2606 OID 16476)
+-- Name: Orders Service_id; Type: FK CONSTRAINT; Schema: CarStation; Owner: postgres
+--
+
+ALTER TABLE ONLY "CarStation"."Orders"
+    ADD CONSTRAINT "Service_id" FOREIGN KEY ("Service_name") REFERENCES "CarStation"."Services"("Service_name") NOT VALID;
+
+
+--
+-- TOC entry 2860 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2021-10-04 04:02:54
+
+--
+-- PostgreSQL database dump complete
+--
+
