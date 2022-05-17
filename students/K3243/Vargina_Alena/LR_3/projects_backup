@@ -1,0 +1,442 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.2
+-- Dumped by pg_dump version 13.2
+
+-- Started on 2021-05-07 16:21:09
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 5 (class 2615 OID 16395)
+-- Name: project_management; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA project_management;
+
+
+ALTER SCHEMA project_management OWNER TO postgres;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 202 (class 1259 OID 16411)
+-- Name: Client; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Client" (
+    id_client integer NOT NULL,
+    phone_number character varying(20) NOT NULL,
+    organisation_address character varying(255) NOT NULL,
+    organisation_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE project_management."Client" OWNER TO postgres;
+
+--
+-- TOC entry 204 (class 1259 OID 16421)
+-- Name: Department; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Department" (
+    id_department integer NOT NULL,
+    phone_number character varying(20) NOT NULL,
+    department_name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE project_management."Department" OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 16416)
+-- Name: Employee; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Employee" (
+    id_employee integer NOT NULL,
+    "Surname" character varying(25) NOT NULL,
+    "Name" character varying(25) NOT NULL,
+    "Patronymic" character varying(25),
+    employee_position_id integer NOT NULL
+);
+
+
+ALTER TABLE project_management."Employee" OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 16426)
+-- Name: Position; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Position" (
+    id_position integer NOT NULL,
+    salary integer NOT NULL,
+    position_title character varying(20) NOT NULL,
+    department_id integer
+);
+
+
+ALTER TABLE project_management."Position" OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 16401)
+-- Name: Project; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Project" (
+    id_project integer NOT NULL,
+    project_status character varying(20) NOT NULL,
+    project_name character varying(50) NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    client_id integer NOT NULL,
+    employee_id integer NOT NULL
+);
+
+
+ALTER TABLE project_management."Project" OWNER TO postgres;
+
+--
+-- TOC entry 201 (class 1259 OID 16406)
+-- Name: Task; Type: TABLE; Schema: project_management; Owner: postgres
+--
+
+CREATE TABLE project_management."Task" (
+    id_task integer NOT NULL,
+    task_status character varying(20) NOT NULL,
+    start_date date NOT NULL,
+    end_date date NOT NULL,
+    incompletion_reason character varying(255),
+    project_id integer NOT NULL,
+    employee_id integer NOT NULL
+);
+
+
+ALTER TABLE project_management."Task" OWNER TO postgres;
+
+--
+-- TOC entry 3034 (class 0 OID 16411)
+-- Dependencies: 202
+-- Data for Name: Client; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Client" (id_client, phone_number, organisation_address, organisation_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3036 (class 0 OID 16421)
+-- Dependencies: 204
+-- Data for Name: Department; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Department" (id_department, phone_number, department_name) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3035 (class 0 OID 16416)
+-- Dependencies: 203
+-- Data for Name: Employee; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Employee" (id_employee, "Surname", "Name", "Patronymic", employee_position_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3037 (class 0 OID 16426)
+-- Dependencies: 205
+-- Data for Name: Position; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Position" (id_position, salary, position_title, department_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3032 (class 0 OID 16401)
+-- Dependencies: 200
+-- Data for Name: Project; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Project" (id_project, project_status, project_name, start_date, end_date, client_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 3033 (class 0 OID 16406)
+-- Dependencies: 201
+-- Data for Name: Task; Type: TABLE DATA; Schema: project_management; Owner: postgres
+--
+
+COPY project_management."Task" (id_task, task_status, start_date, end_date, incompletion_reason, project_id, employee_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2887 (class 2606 OID 16415)
+-- Name: Client Client_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Client"
+    ADD CONSTRAINT "Client_pkey" PRIMARY KEY (id_client);
+
+
+--
+-- TOC entry 2892 (class 2606 OID 16425)
+-- Name: Department Department_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Department"
+    ADD CONSTRAINT "Department_pkey" PRIMARY KEY (id_department);
+
+
+--
+-- TOC entry 2889 (class 2606 OID 16420)
+-- Name: Employee Employee_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Employee"
+    ADD CONSTRAINT "Employee_pkey" PRIMARY KEY (id_employee);
+
+
+--
+-- TOC entry 2894 (class 2606 OID 16430)
+-- Name: Position Position_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Position"
+    ADD CONSTRAINT "Position_pkey" PRIMARY KEY (id_position);
+
+
+--
+-- TOC entry 2879 (class 2606 OID 16405)
+-- Name: Project Project_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Project"
+    ADD CONSTRAINT "Project_pkey" PRIMARY KEY (id_project);
+
+
+--
+-- TOC entry 2883 (class 2606 OID 16410)
+-- Name: Task Task_pkey; Type: CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Task"
+    ADD CONSTRAINT "Task_pkey" PRIMARY KEY (id_task);
+
+
+--
+-- TOC entry 2874 (class 2606 OID 16444)
+-- Name: Client id_client_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Client"
+    ADD CONSTRAINT id_client_check CHECK ((id_client > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2875 (class 2606 OID 16463)
+-- Name: Department id_department_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Department"
+    ADD CONSTRAINT id_department_check CHECK ((id_department > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2876 (class 2606 OID 16474)
+-- Name: Position id_position_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Position"
+    ADD CONSTRAINT id_position_check CHECK ((id_position > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2871 (class 2606 OID 16450)
+-- Name: Task id_task; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Task"
+    ADD CONSTRAINT id_task CHECK ((id_task > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2868 (class 2606 OID 16431)
+-- Name: Project porject_id_project_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Project"
+    ADD CONSTRAINT porject_id_project_check CHECK ((id_project >= 0)) NOT VALID;
+
+
+--
+-- TOC entry 2869 (class 2606 OID 16433)
+-- Name: Project project_date_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Project"
+    ADD CONSTRAINT project_date_check CHECK ((end_date > start_date)) NOT VALID;
+
+
+--
+-- TOC entry 2870 (class 2606 OID 16432)
+-- Name: Project project_status_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Project"
+    ADD CONSTRAINT project_status_check CHECK ((((project_status)::text = 'Выполнен'::text) OR ((project_status)::text = 'В процессе'::text) OR ((project_status)::text = 'Приостановлен'::text) OR ((project_status)::text = 'Не выполнен'::text))) NOT VALID;
+
+
+--
+-- TOC entry 2877 (class 2606 OID 16480)
+-- Name: Position salary_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Position"
+    ADD CONSTRAINT salary_check CHECK ((salary > 0)) NOT VALID;
+
+
+--
+-- TOC entry 2872 (class 2606 OID 16457)
+-- Name: Task task_date_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Task"
+    ADD CONSTRAINT task_date_check CHECK ((end_date > start_date)) NOT VALID;
+
+
+--
+-- TOC entry 2873 (class 2606 OID 16451)
+-- Name: Task task_status_check; Type: CHECK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE project_management."Task"
+    ADD CONSTRAINT task_status_check CHECK ((((task_status)::text = 'Выполнено'::text) OR ((task_status)::text = 'Не выполнено'::text) OR ((task_status)::text = 'В процессе'::text))) NOT VALID;
+
+
+--
+-- TOC entry 2895 (class 1259 OID 16527)
+-- Name: fki_department_id; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_department_id ON project_management."Position" USING btree (department_id);
+
+
+--
+-- TOC entry 2884 (class 1259 OID 16516)
+-- Name: fki_employee_id; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_employee_id ON project_management."Task" USING btree (employee_id);
+
+
+--
+-- TOC entry 2880 (class 1259 OID 16498)
+-- Name: fki_id_client; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_id_client ON project_management."Project" USING btree (client_id);
+
+
+--
+-- TOC entry 2881 (class 1259 OID 16504)
+-- Name: fki_id_employee; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_id_employee ON project_management."Project" USING btree (employee_id);
+
+
+--
+-- TOC entry 2890 (class 1259 OID 16486)
+-- Name: fki_id_position; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_id_position ON project_management."Employee" USING btree (employee_position_id);
+
+
+--
+-- TOC entry 2885 (class 1259 OID 16510)
+-- Name: fki_id_project; Type: INDEX; Schema: project_management; Owner: postgres
+--
+
+CREATE INDEX fki_id_project ON project_management."Task" USING btree (project_id);
+
+
+--
+-- TOC entry 2901 (class 2606 OID 16522)
+-- Name: Position department_id; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Position"
+    ADD CONSTRAINT department_id FOREIGN KEY (department_id) REFERENCES project_management."Department"(id_department) NOT VALID;
+
+
+--
+-- TOC entry 2899 (class 2606 OID 16511)
+-- Name: Task employee_id; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Task"
+    ADD CONSTRAINT employee_id FOREIGN KEY (employee_id) REFERENCES project_management."Employee"(id_employee) NOT VALID;
+
+
+--
+-- TOC entry 2896 (class 2606 OID 16493)
+-- Name: Project id_client; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Project"
+    ADD CONSTRAINT id_client FOREIGN KEY (client_id) REFERENCES project_management."Client"(id_client) NOT VALID;
+
+
+--
+-- TOC entry 2897 (class 2606 OID 16499)
+-- Name: Project id_employee; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Project"
+    ADD CONSTRAINT id_employee FOREIGN KEY (employee_id) REFERENCES project_management."Employee"(id_employee) ON UPDATE RESTRICT ON DELETE RESTRICT NOT VALID;
+
+
+--
+-- TOC entry 2900 (class 2606 OID 24576)
+-- Name: Employee id_position; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Employee"
+    ADD CONSTRAINT id_position FOREIGN KEY (employee_position_id) REFERENCES project_management."Position"(id_position) NOT VALID;
+
+
+--
+-- TOC entry 2898 (class 2606 OID 16505)
+-- Name: Task id_project; Type: FK CONSTRAINT; Schema: project_management; Owner: postgres
+--
+
+ALTER TABLE ONLY project_management."Task"
+    ADD CONSTRAINT id_project FOREIGN KEY (project_id) REFERENCES project_management."Project"(id_project) NOT VALID;
+
+
+-- Completed on 2021-05-07 16:21:10
+
+--
+-- PostgreSQL database dump complete
+--
+
